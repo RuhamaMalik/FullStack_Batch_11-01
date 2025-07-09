@@ -1,8 +1,12 @@
 import React from 'react'
+import Login from './pages/Login'
+import Register from './pages/Register'
 
 const App = () => {
   return (
-    <div className='bg-red-500'>App</div>
+    // <Login/>
+    <Register/>
+    // <div className='bg-red-500'>App</div>
   )
 }
 
