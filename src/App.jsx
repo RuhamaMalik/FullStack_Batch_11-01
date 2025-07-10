@@ -1,10 +1,13 @@
 import React from 'react'
-import Login from './Components/Login'
+
+import AuthForm from './Components/AuthForm'
+
 
 const App = () => {
   return (
     <div>
-       <Login/>
+    <AuthForm/>
+      
     </div>
   )
 }
