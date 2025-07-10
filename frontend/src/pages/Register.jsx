@@ -1,4 +1,4 @@
-import React from 'react'
+ 
 import { useForm } from "react-hook-form"
 import { AiOutlineTeam } from "react-icons/ai";
 import { RiLockPasswordLine, RiLockPasswordFill } from "react-icons/ri";
@@ -9,7 +9,7 @@ const Register = () => {
     const {
         register,
         handleSubmit,
-        watch,
+        // watch,
         setError,
         formState: { errors },
     } = useForm()
@@ -115,7 +115,7 @@ const Register = () => {
         />
 
         {errors[userInput.title] && (
-          <p className="text-red-500 text-sm mt-1">
+          <p className="text-[#C71016] text-sm mt-1">
             {errors[userInput.title]?.message}
           </p>
         )}
@@ -128,7 +128,7 @@ const Register = () => {
     >
       Submit
     </button>
-    <p>Already have an Account? <a href="">Login</a></p>
+    <p>Already have an Account? <a href="">Login</a>  </p>
   </form>
 </div>
 

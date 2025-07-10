@@ -1,1 +1,11 @@
 @import "tailwindcss";
+@import 'flowbite';
+
+
+@media (max-width: 1330px) {
+    .hide {
+        display: none;
+    }
+    
+}
+ 
