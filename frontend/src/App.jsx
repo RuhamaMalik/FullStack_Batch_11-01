@@ -1,12 +1,10 @@
-import React from 'react'
-import Login from './pages/Login'
-import Register from './pages/Register'
+
+import Navbar from "./components/Navbar"
 
 const App = () => {
   return (
-    // <Login/>
-    <Register/>
-    // <div className='bg-red-500'>App</div>
+    
+    <Navbar/>
   )
 }
 
