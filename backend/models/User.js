@@ -28,7 +28,7 @@ const userSchema = mongoose.Schema({
   }
 }, {
   timestamps: true
-})
+}) 
 
 
 userSchema.pre("save", async function (next) {
@@ -44,9 +44,9 @@ userSchema.pre("save", async function (next) {
 
 // custom method
 
-// userSchema.methods.comparePassword = function(plainTextPass){
-//  return bcrypt.compare(plainTextPass, this.password)
-// }
+userSchema.methods.comparePassword = function(plainTextPass){
+ return bcrypt.compare(plainTextPass, this.password)
+}
 
 // comparePassword(req.body.password, user.password)
 
