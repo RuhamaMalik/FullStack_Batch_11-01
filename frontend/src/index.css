@@ -14,7 +14,12 @@
     .hide-catemobile {
         display: block !important;
     }
-    .navfull{
+
+    .navfull {
         width: 100% !important;
+    }
+
+    .searchinput {
+        width: 300px;
     }
 }

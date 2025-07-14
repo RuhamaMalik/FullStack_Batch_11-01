@@ -1,19 +1,43 @@
 import Dropdown from "./Dropdown"
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-
+import { NavLink } from "react-router-dom";
 
 
 const Navbar = () => {
 
   const [openIndex, setOpenIndex] = useState(null);
-
+  const [searchText, setSearchText] = useState("");
+  const [isFocused, setIsFocused] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
 
   const menu = [
-    { title: "HOME", items: ["Dashboard", "Settings"] },
-    { title: "SHOP", items: ["Products", "Cart"] },
-    { title: "PAGES", items: ["About Us", "Contact"] },
+    {
+      title: "HOME",
+      defaultPath: "/dashboard",
+      items: [
+        { title: "Dashboard", path: "/dashboard" },
+        { title: "Settings", path: "/settings" },
+      ],
+    },
+    {
+      title: "SHOP",
+      defaultPath: "/products",
+      items: [
+        { title: "Products", path: "/products" },
+        { title: "Cart", path: "/cart" },
+      ],
+    },
+    {
+      title: "PAGES",
+      defaultPath: "/about",
+      items: [
+        { title: "About Us", path: "/about" },
+        { title: "Contact", path: "/contact" },
+      ],
+    },
   ];
+
 
   const containerVariants = {
     open: { transition: { staggerChildren: 0.15 } },
@@ -26,34 +50,36 @@ const Navbar = () => {
   };
 
 
-
   return (
     <>
       <nav className="">
 
         {/* First nav  */}
-        <div className="max-w-screen-xl bg-[#EFEFEF] border-gray-200  dark:bg-gray-900 px-3 p-0 flex flex-wrap items-center mx-auto  justify-between hide ">
+        <div className="max-w-screen-xl bg-black text-white  border border-white  px-3 p-0 flex flex-wrap items-center mx-auto  justify-between hide ">
           <div>
-            <div className="hidden md:flex items-center space-x-3 rtl:space-x-reverse">
-              <span> Email: <b> email@email.com </b></span>
+            <div className="hidden  md:flex items-center space-x-3 rtl:space-x-reverse">
+              <span className="hover:text-red-500"> Email: <b> email@email.com </b></span>
               <span className="p-5">|</span>
-              <span> Today’s Deal: <b> Sale Off 50% </b></span>
+              <span className="hover:text-red-500 "> Today’s Deal: <b> Sale Off 50% </b></span>
             </div>
           </div>
 
 
           <div className="flex items-center space-x-3 rtl:space-x-reverse">
-            <div className="hidden md:flex items-center space-x-3 rtl:space-x-reverse">
+            <div className="hidden md:flex hover:text-red-500  items-center space-x-3 rtl:space-x-reverse">
               Order Tracking
             </div>
             <span className="p-lg-5 p-2 hidden md:flex items-center">|</span>
 
             <div>
-              <button id="multiLevelDropdownButton" data-dropdown-toggle="multi-dropdown" className="text-black  hover:text-red-500 focus:ring-4 focus:outline-none focus:hidden  rounded-lg  ps-5 m-1 py-2.5 text-center inline-flex items-center " type="button">Currency<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#000" d="m7 10l5 5l5-5z" stroke-width="0.2" stroke="#000" /></svg>
+              <button id="multiLevelDropdownButton" data-dropdown-toggle="multi-dropdown" className="text-white  hover:text-red-500 focus:ring-4 focus:outline-none focus:hidden  rounded-lg  ps-5 m-1 py-2.5 text-center inline-flex items-center " type="button">Currency
+
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="white" d="m7 10l5 5l5-5z" stroke-width="0.2" stroke="white" />
+                </svg>
               </button>
 
               {/* <!-- Dropdown menu --> */}
-              <div id="multi-dropdown" className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700">
+              <div id="multi-dropdown" className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 ">
                 <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="multiLevelDropdownButton">
                   <li>
                     <a href="#" className=" px-1 py-2 flex justify-center items-center hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">USD</a>
@@ -73,7 +99,9 @@ const Navbar = () => {
             <span className="p-lg-5 p-2">|</span>
             <div>
 
-              <button id="multiLevelDropdownButton2" data-dropdown-toggle="multi-dropdown2" className="text-black  hover:text-red-500 focus:ring-4 focus:outline-none focus:hidden rounded-lg  p-1 m-1 py-2.5 text-center inline-flex items-center " type="button">Language <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#000" d="m7 10l5 5l5-5z" stroke-width="0.2" stroke="#000" /></svg>
+              <button id="multiLevelDropdownButton2" data-dropdown-toggle="multi-dropdown2" className="text-white  hover:text-red-500 focus:ring-4 focus:outline-none focus:hidden rounded-lg  p-1 m-1 py-2.5 text-center inline-flex items-center " type="button">Language
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="white" d="m7 10l5 5l5-5z" stroke-width="0.2" stroke="white" />
+                </svg>
               </button>
 
               {/* <!-- Dropdown menu --> */}
@@ -99,54 +127,107 @@ const Navbar = () => {
 
 
         {/* Second nav  */}
-        <div className="max-w-screen-xl bg-white flex flex-wrap items-center justify-between mt-5 pt-5 mx-auto p-4">
+        <div className="max-w-screen-xl  bg-white flex flex-wrap items-center  justify-between mt-5 pt-5 mx-auto lg:p-1">
 
           {/* logo*/}
-          <a href="https://flowbite.com/" className="flex justify-center mx-auto items-center space-x-3 rtl:space-x-reverse">
-            <img src="/logo.png" className="lg:h-8  img-fluid" alt="Flowbite Logo" />
-          </a>
+          <div className="flex  justify-center items-center mx-auto">
+            <a href="/" className="flex justify-center mx-auto items-center lg:space-x-3 rtl:space-x-reverse">
+              <img src="/logo.png" className="lg:h-8 h-10 mx-auto img-fluid" alt="Flowbite Logo" />
+            </a>
+          </div>
 
-          <form className=" mx-auto w-100 ">
-            <div className=" flex mt-3 mb-3  border border-gray-300   dark:border-gray-600">
-              <label className="mb-2 text-sm font-medium  text-white sr-only dark:text-white">Your Email</label>
-              <button id="dropdown-button" data-dropdown-toggle="dropdown" className="hidden lg:flex shrink-0 z-10  items-center py-2.5 px-4 text-sm font-medium text-center   " type="button">Blogs <svg className="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
-              </svg>
-              </button>
+          <div className="flex flex-wrap  justify-center items-center mx-auto">
 
-              <div id="dropdown" className="z-10 hidden bg-white  divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700">
-                <ul className="py-2  text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdown-button">
-                  <li>
-                    <button type="button" className="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Mockups</button>
-                  </li>
-                  <li>
-                    <button type="button" className="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Templates</button>
-                  </li>
-                  <li>
-                    <button type="button" className="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Design</button>
-                  </li>
-                  <li>
-                    <button type="button" className="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Logos</button>
-                  </li>
-                </ul>
-              </div>
-
-              <span className="hidden lg:flex justify-center items-center me-4">|</span>
-
-              {/* search input */}
-              <div className="relative w-full">
-                <input type="search" id="search-dropdown" className="block p-2.5 w-full z-20 text-sm focus:ring-red-500 border-0  text-white    " placeholder="Search Our Store . . . " required />
-                <button type="submit" className="absolute top-0 end-0 p-2.5 text-sm font-medium h-full focus:hidden">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#000" d="M9.5 16q-2.725 0-4.612-1.888T3 9.5t1.888-4.612T9.5 3t4.613 1.888T16 9.5q0 1.1-.35 2.075T14.7 13.3l5.6 5.6q.275.275.275.7t-.275.7t-.7.275t-.7-.275l-5.6-5.6q-.75.6-1.725.95T9.5 16m0-2q1.875 0 3.188-1.312T14 9.5t-1.312-3.187T9.5 5T6.313 6.313T5 9.5t1.313 3.188T9.5 14" stroke-width="0.2" stroke="#000" /></svg>
-                  <span className="sr-only">Search</span>
+            {/* search input */}
+            <form className="mx-auto  lg:w-[550px] w-full">
+              <div className="flex mt-3 mb-3 border border-gray-300 dark:border-gray-600 relative">
+                {/* Dropdown Toggle */}
+                <button
+                  type="button"
+                  onClick={() => setShowDropdown(!showDropdown)}
+                  className="hidden lg:flex shrink-0 z-10 items-center py-2.5 px-4 text-sm font-medium text-center"
+                >
+                  Blogs
+                  <svg className="w-2.5 h-2.5 ms-2.5" fill="black" viewBox="0 0 10 6">
+                    <path d="m1 1 4 4 4-4" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
+                  </svg>
                 </button>
+
+                {/* Dropdown Menu */}
+                {showDropdown && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="absolute top-full left-0 z-10 bg-white  divide-y divide-gray-100 rounded-lg shadow-sm w-44 "
+                  >
+                    <ul className="py-2 text-sm text-gray-700 dark:text-gray-200">
+                      {["Mockups", "Templates", "Design", "Logos"].map((item, i) => (
+                        <li key={i}>
+                          <button type="button" className="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                            {item}
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  </motion.div>
+                )}
+
+                {/* Separator */}
+                <span className="hidden lg:flex  justify-center items-center me-4">|</span>
+
+                {/* Search Input */}
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, ease: "easeOut" }}
+                  className="relative "
+                >
+                  <input
+                    type="text"
+                    value={searchText}
+                    onChange={(e) => setSearchText(e.target.value)}
+                    onFocus={() => setIsFocused(true)}
+                    onBlur={() => setIsFocused(false)}
+                    className="block p-2.5  w-[500px] searchinput  text-sm text-black   bg-transparent border-none focus:ring-red-500"
+                    placeholder="Search Our Store . . ."
+                    required
+                  />
+
+                  {searchText && isFocused ? (
+                    <motion.button
+                      type="button"
+                      onClick={() => setSearchText("")}
+                      initial={{ scale: 0.8, rotate: -10 }}
+                      animate={{ scale: 1, rotate: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="absolute top-0 end-0 p-2.5"
+                    >
+                      {/* Close Icon */}
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#fff" viewBox="0 0 24 24">
+                        <path d="M18 6L6 18M6 6l12 12" stroke="#000" strokeWidth="2" strokeLinecap="round" />
+                      </svg>
+                    </motion.button>
+                  ) : (
+                    <motion.span
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: 0.2, duration: 0.3 }}
+                      className="absolute top-0 end-0 p-2.5 pointer-events-none"
+                    >
+                      {/* Search Icon */}
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#fff" viewBox="0 0 24 24">
+                        <path fill="#000" d="M9.5 16q-2.725 0-4.612-1.888T3 9.5t1.888-4.612T9.5 3t4.613 1.888T16 9.5q0 1.1-.35 2.075T14.7 13.3l5.6 5.6q.275.275.275.7t-.275.7t-.7.275t-.7-.275l-5.6-5.6q-.75.6-1.725.95T9.5 16m0-2q1.875 0 3.188-1.312T14 9.5t-1.312-3.187T9.5 5T6.313 6.313T5 9.5t1.313 3.188T9.5 14" />
+                      </svg>
+                    </motion.span>
+                  )}
+                </motion.div>
               </div>
-            </div>
-          </form>
+            </form>
+          </div >
 
 
-          <div className="lg:flex  hidden space-x-3 rtl:space-x-reverse">
-            
+          <div className="lg:flex  hidden lg:me-5 space-x-3 rtl:space-x-reverse">
             {/* user icon */}
             <div>
               <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="#000"
@@ -162,45 +243,54 @@ const Navbar = () => {
                 stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
                 d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4a2 2 0 0 0 0-4m8 0a2 2 0 1 0 0 4a2 2 0 0 0 0-4m-8.5-3h9.25L19 7H7.312" /></svg>
             </div>
-          </div>
+          </div >
+        </div >
 
-        </div>
 
 
         {/* third nav pages & categories  */}
-        <div className="max-w-screen-xl relative flex flex-wrap  gap-5 mb-5 items-center  justify-center mx-auto ">
+        < div className="max-w-screen-xl lg:mt-10  relative flex lg:flex-row  flex-col gap-5 lg:gap-5 mb-5 items-center  justify-center mx-auto " >
 
           {/* dropdown-menu */}
-          <div className="max-w-screen-xl lg:w-[20%] navfull" >
+          < div className="max-w-screen-xl border border-white lg:w-[25%]  navfull" >
             <Dropdown />
-          </div>
+          </div >
 
-          &nbsp;&nbsp;
-          &nbsp;&nbsp;
-          &nbsp;&nbsp;
 
-          <div className="lg:w-[73%] bg-red-100 navfull">
+          <div className="lg:w-[75%]  border border-white navfull">
 
             <nav className="">
+              <div className="flex flex-wrap justify-between items-center bg-black">
 
-              {/* pages tabs */}
-              <div className="flex flex-wrap  justify-between  items-center bg-black">
                 <div className="bg-black">
-                  <ul className="flex flex-wrap justify-center item-center gap-10 bg-black  text-white text-sm font-medium py-4 px-5" >
+                  <ul className="flex flex-wrap justify-center  items-center mx-auto gap-10 bg-black text-white text-sm font-medium py-2 px-2">
                     {menu.map((menuItem, i) => (
-                      <li
-                        key={i}
-                        className="relative group"
-                        onMouseEnter={() => setOpenIndex(i)}
-                        onMouseLeave={() => setOpenIndex(null)}
-                      >
-                        <button className="flex items-center gap-2 hover:text-red-500 transition-colors">
+                      <li key={i} className="relative flex items-center gap-1">
+                        {/* Clickable Title */}
+                        <NavLink
+                          to={menuItem.defaultPath}
+                          className="hover:text-red-500 ms-1 font-medium transition"
+                        >
                           {menuItem.title}
+                        </NavLink>
+
+                        {/* Dropdown Toggle via SVG */}
+                        <button
+                          onClick={() => setOpenIndex(openIndex === i ? null : i)}
+                          className="hover:text-red-500 transition"
+                        >
                           <svg className="w-2.5 h-2.5" fill="none" viewBox="0 0 10 6">
-                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
+                            <path
+                              stroke="currentColor"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
+                              d="m1 1 4 4 4-4"
+                            />
                           </svg>
                         </button>
 
+                        {/* Dropdown */}
                         <AnimatePresence>
                           {openIndex === i && (
                             <motion.ul
@@ -214,9 +304,11 @@ const Navbar = () => {
                                 <motion.li
                                   key={j}
                                   variants={itemVariants}
-                                  className="px-4 py-2 text-gray-700 hover:bg-gray-100 cursor-pointer"
+                                  className="px-4 py-2 text-gray-700"
                                 >
-                                  {subItem}
+                                  <NavLink to={subItem.path} className="block hover:text-red-500">
+                                    {subItem.title}
+                                  </NavLink>
                                 </motion.li>
                               ))}
                             </motion.ul>
@@ -225,35 +317,45 @@ const Navbar = () => {
                       </li>
                     ))}
 
-                    <li>
-                      <a href="#" className="hover:text-red-500 transition">COLLECTIONS</a>
+                    {/* Static tabs (optional routing later) */}
+                    <li
+                      className=" py-1 text-white "
+                    >
+                      <NavLink to="/collection" className="block hover:text-red-500">
+                        COLLECTION
+                      </NavLink>
                     </li>
-                    <li>
-                      <a href="#" className="hover:text-red-500 transition">BLOGS</a>
+                    <li
+                      className=" py-1 text-white "
+                    >
+                      <NavLink to="/blogs" className="block hover:text-red-500">
+                        BLOGS
+                      </NavLink>
                     </li>
-                    <li>
-                      <a href="#" className="hover:text-red-500 transition">SECTIONS</a>
+                    <li
+                      className=" py-1 text-white "
+                    >
+                      <NavLink to="/section" className="block hover:text-red-500">
+                        SECTION
+                      </NavLink>
                     </li>
                   </ul>
+
                 </div>
 
-
-                {/* freeshipping */}
-                <div className="hidden hide lg:flex gap-3 justify-center items-center lg:me-0  text-white font-bold px-3 w-[170px] h-[52px] bg-red-500 py-4 ">
+                <div className="hidden hide lg:flex gap-3 justify-center items-center lg:me-0 text-white font-bold px-3 w-[170px] h-[52px] bg-red-500 py-4">
                   <img src="/freeshipping.png" alt="Free Shipping" width={25} className="rounded-lg" />
                   <span>Free Shipping</span>
                 </div>
               </div>
-
-
-
-
             </nav>
+
+
+
           </div>
 
 
-        </div>
-
+        </div >
       </nav >
     </>
   )
