@@ -2,9 +2,13 @@ import { useState } from 'react';
 
 
 const Footer = () => {
-    const [isOpen, setIsOpen] = useState(false);
-    const [isOpn, setOpen] = useState(false);
+  const [openSection, setOpenSection] = useState(null); // 'company', 'explore', 'location'
 
+  const toggleSection = (section) => {
+    setOpenSection(openSection === section ? null : section);
+  };
+
+  const isSectionOpen = (section) => openSection === section;
   return (
     <>
       <section className="bg-red-600 text-white py-4 -mb-6 mx-4 rounded-lg shadow-lg  relative z-10">
@@ -44,13 +48,12 @@ const Footer = () => {
   <footer className="bg-black text-white">
     <div className="max-w-7xl mx-auto px-4 py-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
       <div className={`border lg:border-0 p-4 rounded-md border border-white shadow-md transition-all duration-300 ${
-        isOpen ? 'border border-white shadow-md' : ''
+        isSectionOpen('ccontact') ? 'border border-white shadow-md' : ''
       }`}>
         <h4 className="text-xl font-semibold mb-4 cursor-pointer
          flex justify-center items-center sm:cursor-default"
-        onClick={() => setIsOpen(!isOpen)}>Contact information</h4>
-        <ul className={`rounded-lg transition-all ${
-          isOpen ? 'block' : 'hidden'
+        onClick={()=>{toggleSection('contact')}}>Contact information</h4>
+        <ul className={`rounded-lg transition-all ${isSectionOpen('contact') ? 'block' : 'hidden' 
         } sm:block`}>
           <p>Call Us 24/7 Free</p>
         <p className="text-2xl font-bold my-2"><a href="tel:1 001 234 5678">1 001 234 5678</a></p>
@@ -67,14 +70,13 @@ const Footer = () => {
          </ul>
       </div>
 
-      <div className={`border lg:border-0 p-4 rounded-md border border-white shadow-md transition-all duration-300 ${
-        isOpen ? 'border border-white shadow-md' : ''
+     <div className={`border lg:border-0 p-4 rounded-md border border-white shadow-md transition-all duration-300 ${
+        isSectionOpen('company') ? 'border border-white shadow-md' : ''
       }`}>
         <h4 className="text-xl font-semibold mb-4 cursor-pointer
          flex justify-center items-center sm:cursor-default"
-        onClick={() => setIsOpen(!isOpen)}>Company</h4>
-        <ul  className={`rounded-lg transition-all ${
-          isOpen ? 'block' : 'hidden'
+        onClick={()=>{toggleSection('company')}}>Company</h4>
+        <ul className={`rounded-lg transition-all ${isSectionOpen('company') ? 'block' : 'hidden' 
         } sm:block`}>
           <li><a href="#" className="hover:underline">About Us</a></li>
           <li><a href="#" className="hover:underline">Shop Products</a></li>
@@ -85,15 +87,13 @@ const Footer = () => {
         </ul>
       </div>
 
-      <div  className={`border lg:border-0 p-4 rounded-md border border-white shadow-md transition-all duration-300 ${
-        isOpen ? 'border border-white shadow-md' : ''
+     <div className={`border lg:border-0 p-4 rounded-md border border-white shadow-md transition-all duration-300 ${
+        isSectionOpen('explore') ? 'border border-white shadow-md' : ''
       }`}>
-        <h4 className="text-xl font-semibold mb-4 cursor-pointer flex justify-center items-center 
-        sm:cursor-default"
-        onClick={() => setOpen(!isOpn)}>Explore</h4>
-
-        <ul  className={`rounded-lg transition-all ${
-          isOpen ? 'block' : 'hidden'
+        <h4 className="text-xl font-semibold mb-4 cursor-pointer
+         flex justify-center items-center sm:cursor-default"
+        onClick={()=>{toggleSection('explore')}}>Explore</h4>
+        <ul className={`rounded-lg transition-all ${isSectionOpen('explore') ? 'block' : 'hidden' 
         } sm:block`}>
           <li><a href="#" className="hover:underline">Gift a Smile</a></li>
           <li><a href="#" className="hover:underline">Creybit Cares</a></li>
@@ -104,15 +104,16 @@ const Footer = () => {
         </ul>
       </div>
 
-      <div  className={`border lg:border-0 p-4 rounded-md border border-white shadow-md transition-all duration-300 ${
-        isOpen ? 'border border-white shadow-md' : ''
+     <div className={`border lg:border-0 p-4 rounded-md border border-white shadow-md transition-all duration-300 ${
+        isSectionOpen('location') ? 'border border-white shadow-md' : ''
       }`}>
-        <h4 className="text-xl font-semibold mb-4 cursor-pointer flex justify-center items-center sm:cursor-default"
-        onClick={() => setIsOpen(!isOpen)}>Our location</h4>
+        <h4 className="text-xl font-semibold mb-4 cursor-pointer
+         flex justify-center items-center sm:cursor-default"
+        onClick={()=>{toggleSection('location')}}>Our location</h4>
         <a href="https://goo.gl/maps/9nRR47Z2qstkfTyP8" target="_blank" >
           <img src="https://vela-develop.myshopify.com/cdn/shop/files/footer-map.png?v=1613731231" alt="map" 
          className={`rounded-lg transition-all duration-300 ${
-          isOpen ? 'block' : 'hidden'
+          isSectionOpen('location') ?'block' : 'hidden'
         } sm:block`} />
         </a>
       </div>
@@ -123,7 +124,7 @@ const Footer = () => {
 
 
 
-  <div class="bg-gray-900  w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
+  <div class="border-t-4 border-gray-500 bg-black  w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
       <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">
         Copyright &copy; 2020 Velatheme. All Rights Reserved
     </span>
