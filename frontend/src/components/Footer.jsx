@@ -87,7 +87,8 @@ const Footer = () => {
         </ul>
       </div>
 
-     <div className={`border lg:border-0 p-4 rounded-md border border-white shadow-md transition-all duration-300 ${
+     <div className={`border lg:border-0 p-4 rounded-md border border-white 
+     shadow-md transition-all duration-100 ${
         isSectionOpen('explore') ? 'border border-white shadow-md' : ''
       }`}>
         <h4 className="text-xl font-semibold mb-4 cursor-pointer
