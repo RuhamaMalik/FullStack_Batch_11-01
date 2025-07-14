@@ -26,6 +26,7 @@ const Navbar = () => {
   };
 
 
+<<<<<<< HEAD
   // featured 
   const features = [
     {
@@ -74,6 +75,8 @@ const Navbar = () => {
       )
     }
   ];
+=======
+>>>>>>> Bushrajan
 
   return (
     <>
@@ -149,6 +152,10 @@ const Navbar = () => {
         {/* Second nav  */}
         <div className="max-w-screen-xl bg-white flex flex-wrap items-center justify-between mt-5 pt-5 mx-auto p-4">
 
+<<<<<<< HEAD
+=======
+          {/* logo*/}
+>>>>>>> Bushrajan
           <a href="https://flowbite.com/" className="flex justify-center mx-auto items-center space-x-3 rtl:space-x-reverse">
             <img src="/logo.png" className="lg:h-8  img-fluid" alt="Flowbite Logo" />
           </a>
@@ -180,6 +187,10 @@ const Navbar = () => {
 
               <span className="hidden lg:flex justify-center items-center me-4">|</span>
 
+<<<<<<< HEAD
+=======
+              {/* search input */}
+>>>>>>> Bushrajan
               <div className="relative w-full">
                 <input type="search" id="search-dropdown" className="block p-2.5 w-full z-20 text-sm focus:ring-red-500 border-0  text-white    " placeholder="Search Our Store . . . " required />
                 <button type="submit" className="absolute top-0 end-0 p-2.5 text-sm font-medium h-full focus:hidden">
@@ -190,9 +201,16 @@ const Navbar = () => {
             </div>
           </form>
 
+<<<<<<< HEAD
           <div className="lg:flex  hidden space-x-3 rtl:space-x-reverse">
 
 {/* User icon */}
+=======
+
+          <div className="lg:flex  hidden space-x-3 rtl:space-x-reverse">
+            
+            {/* user icon */}
+>>>>>>> Bushrajan
             <div>
               <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="#000"
                 d="M7.75 7.5a4.25 4.25 0 1 1 8.5 0a4.25 4.25 0 0 1-8.5 0M12 4.75a2.75 2.75 0 1 0 0 5.5a2.75 2.75 0 0 0 0-5.5m-4 10A2.25 2.25 0 0 0 5.75 17v1.188c0 .018.013.034.031.037c4.119.672 8.32.672 12.438 0a.04.04 0 0 0 .031-.037V17A2.25 2.25 0 0 0 16 14.75h-.34a.3.3 0 0 0-.079.012l-.865.283a8.75 8.75 0 0 1-5.432 0l-.866-.283a.3.3 0 0 0-.077-.012zM4.25 17A3.75 3.75 0 0 1 8 13.25h.34q.28.001.544.086l.866.283a7.25 7.25 0 0 0 4.5 0l.866-.283c.175-.057.359-.086.543-.086H16A3.75 3.75 0 0 1 19.75 17v1.188c0 .754-.546 1.396-1.29 1.517a40.1 40.1 0 0 1-12.92 0a1.54 1.54 0 0 1-1.29-1.517z"
@@ -200,6 +218,10 @@ const Navbar = () => {
               </svg>
             </div>
 
+<<<<<<< HEAD
+=======
+            {/* cart icon */}
+>>>>>>> Bushrajan
             <div className="relative">
               <span className="bg-red-500 text-white px-1 -top-2 ml-5 absolute  overflow-hidden rounded-xl">0</span>
               <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="#000"
@@ -212,9 +234,16 @@ const Navbar = () => {
 
 
         {/* third nav pages & categories  */}
+<<<<<<< HEAD
         <div className="max-w-screen-xl relative flex flex-wrap lg:gap-5 items-center lg:justify-between justify-center mt-5 mx-auto p-4">
 
           <div className="lg:w-[20%]  " >
+=======
+        <div className="max-w-screen-xl relative flex flex-wrap  gap-5 mb-5 items-center  justify-center mx-auto ">
+
+          {/* dropdown-menu */}
+          <div className="max-w-screen-xl lg:w-[20%] navfull" >
+>>>>>>> Bushrajan
             <Dropdown />
           </div>
 
@@ -222,12 +251,23 @@ const Navbar = () => {
           &nbsp;&nbsp;
           &nbsp;&nbsp;
 
+<<<<<<< HEAD
           <div className="lg:w-[73%]">
             <nav className="  py-4 px-5">
 
               <div className="flex flex-wrap  justify-between items-center bg-black">
                 <div className="bg-black">
                   <ul className="flex flex-wrap gap-10 bg-black text-white text-sm font-medium py-4 px-5" >
+=======
+          <div className="lg:w-[73%] bg-red-100 navfull">
+
+            <nav className="">
+
+              {/* pages tabs */}
+              <div className="flex flex-wrap  justify-between  items-center bg-black">
+                <div className="bg-black">
+                  <ul className="flex flex-wrap justify-center item-center gap-10 bg-black  text-white text-sm font-medium py-4 px-5" >
+>>>>>>> Bushrajan
                     {menu.map((menuItem, i) => (
                       <li
                         key={i}
@@ -278,6 +318,11 @@ const Navbar = () => {
                   </ul>
                 </div>
 
+<<<<<<< HEAD
+=======
+
+                {/* freeshipping */}
+>>>>>>> Bushrajan
                 <div className="hidden hide lg:flex gap-3 justify-center items-center lg:me-0  text-white font-bold px-3 w-[170px] h-[52px] bg-red-500 py-4 ">
                   <img src="/freeshipping.png" alt="Free Shipping" width={25} className="rounded-lg" />
                   <span>Free Shipping</span>
@@ -293,6 +338,7 @@ const Navbar = () => {
 
         </div>
 
+<<<<<<< HEAD
 
 
         <div className="max-w-screen-xl bg-white flex flex-wrap items-center justify-center gap-5 mx-auto p-1">
@@ -348,6 +394,8 @@ const Navbar = () => {
 
 
 
+=======
+>>>>>>> Bushrajan
       </nav >
     </>
   )
