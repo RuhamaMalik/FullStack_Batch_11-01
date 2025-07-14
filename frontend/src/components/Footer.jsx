@@ -51,7 +51,7 @@ const Footer = () => {
         isSectionOpen('ccontact') ? 'border border-white shadow-md' : ''
       }`}>
         <h4 className="text-xl font-semibold mb-4 cursor-pointer
-         flex justify-center items-center sm:cursor-default"
+         sm:cursor-default"
         onClick={()=>{toggleSection('contact')}}>Contact information</h4>
         <ul className={`rounded-lg transition-all ${isSectionOpen('contact') ? 'block' : 'hidden' 
         } sm:block`}>
@@ -74,7 +74,7 @@ const Footer = () => {
         isSectionOpen('company') ? 'border border-white shadow-md' : ''
       }`}>
         <h4 className="text-xl font-semibold mb-4 cursor-pointer
-         flex justify-center items-center sm:cursor-default"
+        sm:cursor-default"
         onClick={()=>{toggleSection('company')}}>Company</h4>
         <ul className={`rounded-lg transition-all ${isSectionOpen('company') ? 'block' : 'hidden' 
         } sm:block`}>
@@ -91,7 +91,7 @@ const Footer = () => {
         isSectionOpen('explore') ? 'border border-white shadow-md' : ''
       }`}>
         <h4 className="text-xl font-semibold mb-4 cursor-pointer
-         flex justify-center items-center sm:cursor-default"
+          sm:cursor-default "
         onClick={()=>{toggleSection('explore')}}>Explore</h4>
         <ul className={`rounded-lg transition-all ${isSectionOpen('explore') ? 'block' : 'hidden' 
         } sm:block`}>
@@ -104,11 +104,12 @@ const Footer = () => {
         </ul>
       </div>
 
-     <div className={`border lg:border-0 p-4 rounded-md border border-white shadow-md transition-all duration-300 ${
+     <div className={`border lg:border-0 p-4 rounded-md border border-white 
+     shadow-md transition-all duration-300 ${
         isSectionOpen('location') ? 'border border-white shadow-md' : ''
       }`}>
         <h4 className="text-xl font-semibold mb-4 cursor-pointer
-         flex justify-center items-center sm:cursor-default"
+          sm:cursor-default"
         onClick={()=>{toggleSection('location')}}>Our location</h4>
         <a href="https://goo.gl/maps/9nRR47Z2qstkfTyP8" target="_blank" >
           <img src="https://vela-develop.myshopify.com/cdn/shop/files/footer-map.png?v=1613731231" alt="map" 
