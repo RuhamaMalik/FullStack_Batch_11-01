@@ -36,8 +36,8 @@ const Sidebar = ({ isMobileOpen, setIsMobileOpen }) => {
         <>
             <div
                 className={`
-        hidden md:flex flex-col h-screen bg-black text-white shadow-lg z-40 transition-all duration-300
-        ${collapsed ? "w-18" : "w-55"}`}
+        hidden md:flex flex-col h-screen  bg-black text-white shadow-lg z-40 transition-all duration-300 
+    ${collapsed ? "w-18" : "w-55"}`}
             >
                 {/* //////// heading and collapdes ///////// */}
                 <div className="p-4 flex items-center justify-between border-b border-gray-700">
