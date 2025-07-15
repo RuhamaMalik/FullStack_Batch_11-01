@@ -30,25 +30,33 @@ import Xbox from "./category_pages/GamesNested/Xbox.jsx";
 import NintendoSwitch from "./category_pages/GamesNested/NintendoSwitch.jsx";
 import PCGamesGames from "./category_pages/GamesNested/PCGamesGames.jsx";
 
-// 📂 Pages
-import Services from "./pages/Services.jsx";
-import Products from "./pages/Products.jsx";
-import Settings from "./pages/Settings.jsx";
-import Contact from "./pages/Contact.jsx";
+
+// 📂 Pages nested routed of dropdown
+import Home from "../pages/Home.jsx";
+
+import PrivatePolicy from "./pages/PageNestedPages/Privatepolicy.js"
+import RefundPolicy from "./pages/PageNestedPages/refundPolicy.js"
+import TermsOfService from "./pages/PageNestedPages/termsOfService.jsx"
+import FAQs from "./pages/PageNestedPages/faqs.js"
+
 import Collection from "./pages/Collection.jsx";
-import Section from "./pages/Section.jsx";
 import Blogs from "./pages/Blogs.jsx";
+import Section from "./pages/Section.jsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     children: [
+      
       // 🌐 Static Pages
-      { path: "dashboard", element: <Services /> },
-      { path: "products", element: <Products /> },
-      { path: "settings", element: <Settings /> },
-      { path: "contact", element: <Contact /> },
+      { path: "/", element: <Home /> },
+
+      { path: "privatePolicy", element: <PrivatePolicy /> },
+      { path: "refundPolicy", element: <RefundPolicy /> },
+      { path: "termsOfService", element: <TermsOfService /> },
+      { path: "faqs", element: <FAQs /> },
+
       { path: "collection", element: <Collection /> },
       { path: "section", element: <Section /> },
       { path: "blogs", element: <Blogs /> },

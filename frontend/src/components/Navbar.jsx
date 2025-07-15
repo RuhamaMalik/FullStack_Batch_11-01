@@ -10,33 +10,103 @@ const Navbar = () => {
   const [searchText, setSearchText] = useState("");
   const [isFocused, setIsFocused] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [hoveredSubIndex, setHoveredSubIndex] = useState(null);
+
 
   const menu = [
     {
       title: "HOME",
-      defaultPath: "/dashboard",
+      defaultPath: "/home1",
       items: [
-        { title: "Dashboard", path: "/dashboard" },
-        { title: "Settings", path: "/settings" },
+        { title: "Home 1", path: "/home1" },
+        { title: "Home 2", path: "/home2" },
+        { title: "Home 3", path: "/home3" },
+        { title: "Home 4", path: "/home4" },
+        { title: "Home 5", path: "/home5" },
+        { title: "Home 6", path: "/home6" },
+        { title: "Home 7", path: "/home7" },
+        { title: "Home 8", path: "/home8" },
       ],
     },
+
     {
       title: "SHOP",
       defaultPath: "/products",
       items: [
-        { title: "Products", path: "/products" },
-        { title: "Cart", path: "/cart" },
+        {
+          title: "Shop Pages",
+          path: "/shopPages",
+          children: [
+            { title: "Audio & Home", path: "/shopPages/audio-home" },
+            { title: "Home & Garden", path: "/shopPages/home-garden" },
+            { title: "SmartPhone & iPad", path: "/shopPages/smartphone-ipad" },
+            { title: "Video & Game", path: "/shopPages/video-game" },
+          ],
+        },
+        {
+          title: "Product Pages",
+          path: "/productPages",
+          children: [
+            { title: "My Account", path: "/productPages/my-account" },
+            { title: "Contact Us", path: "/productPages/contact-us" },
+            { title: "About Us", path: "/productPages/about-us" },
+          ],
+        },
+        {
+          title: "Cart Pages",
+          path: "/cartPages",
+          children: [
+            { title: "Cart Modal", path: "/cartPages/modal" },
+            { title: "Cart Drawer", path: "/cartPages/drawer" },
+            { title: "Cart Page", path: "/cartPages/page" },
+          ],
+        },
+        {
+          title: "Other Pages",
+          path: "/otherPages",
+          children: [
+            { title: "About Page", path: "/otherPages/about" },
+            { title: "Contact Page", path: "/otherPages/contact" },
+            { title: "FAQs Page", path: "/otherPages/faqs" },
+            { title: "Search Page", path: "/otherPages/search" },
+            { title: "Country Page", path: "/otherPages/country" },
+          ],
+        },
+        {
+          title: "Filter Layout",
+          path: "/filterLayout",
+          children: [
+            { title: "Filter Default", path: "/filterLayout/default" },
+            { title: "Filter Sidebar", path: "/filterLayout/sidebar" },
+            { title: "Filter Modal", path: "/filterLayout/modal" },
+            { title: "Filter Canvas", path: "/filterLayout/canvas" },
+          ],
+        },
+        {
+          title: "Product Styles",
+          path: "/productStyles",
+          children: [
+            { title: "Product Simple", path: "/productStyles/simple" },
+            { title: "Product Variants", path: "/productStyles/variants" },
+            { title: "Out Of Stock", path: "/productStyles/out-of-stock" },
+          ],
+        },
       ],
     },
+
     {
       title: "PAGES",
-      defaultPath: "/about",
+      defaultPath: "/Privacy Policy",
       items: [
-        { title: "About Us", path: "/about" },
-        { title: "Contact", path: "/contact" },
+        { title: "Privacy Policy ", path: "/privacyPolicy " },
+        { title: "Refund Policy ", path: "/refundPolicy " },
+        { title: "Terms of Service ", path: "/termsOfService " },
+        { title: "FAQs             ", path: "/faqs             " },
       ],
     },
   ];
+
+
 
 
   const containerVariants = {
@@ -241,7 +311,8 @@ const Navbar = () => {
               <span className="bg-red-500 text-white px-1 -top-2 ml-5 absolute  overflow-hidden rounded-xl">0</span>
               <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="#000"
                 stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
-                d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4a2 2 0 0 0 0-4m8 0a2 2 0 1 0 0 4a2 2 0 0 0 0-4m-8.5-3h9.25L19 7H7.312" /></svg>
+                d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4a2 2 0 0 0 0-4m8 0a2 2 0 1 0 0 4a2 2 0 0 0 0-4m-8.5-3h9.25L19 7H7.312" />
+              </svg>
             </div>
           </div >
         </div >
@@ -264,6 +335,7 @@ const Navbar = () => {
 
                 <div className="bg-black">
                   <ul className="flex flex-wrap justify-center  items-center mx-auto gap-10 bg-black text-white text-sm font-medium py-2 px-2">
+                    
                     {menu.map((menuItem, i) => (
                       <li key={i} className="relative flex items-center gap-1">
                         {/* Clickable Title */}
@@ -290,7 +362,8 @@ const Navbar = () => {
                           </svg>
                         </button>
 
-                        {/* Dropdown */}
+                        {/* Dropdown */} 
+                        {/* Top-Level Dropdown */}
                         <AnimatePresence>
                           {openIndex === i && (
                             <motion.ul
@@ -298,22 +371,67 @@ const Navbar = () => {
                               animate="open"
                               exit="closed"
                               variants={containerVariants}
-                              className="absolute top-full mt-4 w-[130px] bg-white shadow rounded z-50"
+                              className="absolute top-full mt-4 w-max bg-white shadow-lg  z-50"
                             >
                               {menuItem.items.map((subItem, j) => (
                                 <motion.li
                                   key={j}
                                   variants={itemVariants}
-                                  className="px-4 py-2 text-gray-700"
+                                  onMouseEnter={() => setHoveredSubIndex(j)}
+                                  onMouseLeave={() => setHoveredSubIndex(null)}
+                                  className="relative px-6 py-2 text-gray-700 group"
                                 >
-                                  <NavLink to={subItem.path} className="block hover:text-red-500">
-                                    {subItem.title}
-                                  </NavLink>
+                                  <div className="flex justify-between items-center">
+                                    <NavLink to={subItem.path} className="hover:text-red-500">
+                                      {subItem.title}
+                                    </NavLink>
+
+                                    {/* Nested Trigger if children exist */}
+                                    {subItem.children && (
+                                      <svg
+                                        className="w-2.5 h-2.5 ml-2 text-gray-400 group-hover:text-red-500 transition"
+                                        fill="none"
+                                        viewBox="0 0 6 10"
+                                      >
+                                        <path
+                                          stroke="currentColor"
+                                          strokeLinecap="round"
+                                          strokeLinejoin="round"
+                                          strokeWidth="2"
+                                          d="m1 1 4 4-4 4"
+                                        />
+                                      </svg>
+                                    )}
+                                  </div>
+
+                                  {/* 🌱 Nested Dropdown */}
+                                  {hoveredSubIndex === j && subItem.children && (
+                                    <motion.ul
+                                      initial="closed"
+                                      animate="open"
+                                      exit="closed"
+                                      variants={containerVariants}
+                                      className="absolute left-full top-0 w-max min-w-[160px] bg-white shadow-md z-50"
+                                    >
+                                      {subItem.children.map((childItem, k) => (
+                                        <motion.li
+                                          key={k}
+                                          variants={itemVariants}
+                                          className="px-4 py-2 text-gray-700 whitespace-nowrap"
+                                        >
+                                          <NavLink to={childItem.path} className="block hover:text-red-500">
+                                            {childItem.title}
+                                          </NavLink>
+                                        </motion.li>
+                                      ))}
+                                    </motion.ul>
+                                  )}
                                 </motion.li>
                               ))}
                             </motion.ul>
                           )}
                         </AnimatePresence>
+
                       </li>
                     ))}
 
