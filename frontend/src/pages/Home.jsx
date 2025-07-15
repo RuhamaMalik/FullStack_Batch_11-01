@@ -1,11 +1,17 @@
-import Navbar from "../components/Navbar"
+import Featured from "../components/Featured"
+import Hero from "../components/Hero"
+import CardSlider from "../components/cardSlider"
+import TopProducts from "../components/TopProducts"
 
 
 const Home = () => {
     return (
-        <div>
-            <Navbar />
-        </div>
+        <>
+            <Hero />
+            <Featured />
+            <CardSlider/>
+            <TopProducts/>
+        </>
     )
 }
 
