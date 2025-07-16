@@ -1,4 +1,5 @@
 import axios from "axios";
+import {getToken} from "../utils/auth";
 
 export const fetchUserFromServer = async () => {
   const token = getToken();
