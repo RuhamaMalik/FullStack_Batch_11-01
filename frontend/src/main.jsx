@@ -1,18 +1,16 @@
-import { BrowserRouter } from "react-router-dom";
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import App from './App.jsx'
 import './index.css'
 import 'flowbite';
+import { RouterProvider } from 'react-router-dom';
+import router from './routes/router.jsx';
 
 
 
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </StrictMode>
+    <RouterProvider router={router} />
+  </StrictMode>,
 )
 

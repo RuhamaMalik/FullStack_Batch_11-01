@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { createBrowserRouter } from "react-router-dom";
 import App from "../main.jsx";
 
@@ -94,6 +95,46 @@ const router = createBrowserRouter([
       { path: "games/pc", element: <PCGamesGames /> },
     ],
   },
+=======
+import { createBrowserRouter } from 'react-router-dom';
+import App from '../App';
+import Dashboard from '../pages/Dashboard';
+import AdminPanel from '../pages/AdminPanel';
+import ProtectedRoute from '../components/ProtectedRoute';
+import AuthForm from '../components/AuthForm';
+import Home from '../pages/Home';
+
+const router = createBrowserRouter([
+    {
+        path: '/',
+        element: <App />, 
+        children: [
+            { 
+                index: true,
+                element: (
+                <Home/>
+                ),
+            },
+            {
+                path: 'dashboard',
+                element: (
+                    <ProtectedRoute>
+                        <Dashboard />
+                    </ProtectedRoute>
+                ),
+            },
+            {
+                path: 'admin',
+                element: (
+                    <ProtectedRoute role="admin">
+                        <AdminPanel />
+                    </ProtectedRoute>
+                ),
+            },
+        ],
+    },
+    { path: '/auth', element: <AuthForm />}
+>>>>>>> 9dd38e9b3a4ca8e38ba34f74a48406760b8cf6e6
 ]);
 
 export default router;

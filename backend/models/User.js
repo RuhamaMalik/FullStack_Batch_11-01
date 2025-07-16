@@ -1,4 +1,5 @@
 import mongoose from "mongoose"
+import bcrypt from "bcryptjs"
 
 
 const userSchema = mongoose.Schema({
@@ -17,7 +18,7 @@ const userSchema = mongoose.Schema({
     required: true,
     minlength: 8
   },
-    contact: {
+  contact: {
     type: String,
   },
   role: {
@@ -25,11 +26,29 @@ const userSchema = mongoose.Schema({
     enum: ["user", "admin"],
     default: "user"
   }
-},{
-  timestamps : true
-})
+}, {
+  timestamps: true
+}) 
 
 
+userSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) {
+    return next()
+  }
+  this.password = await bcrypt.hash(this.password, 12);
+  next();
+}
+)
+
+//// 123456  ---- sfewjr4j548523232323485849y234u343$%^%^%^
+
+// custom method
+
+userSchema.methods.comparePassword = function(plainTextPass){
+ return bcrypt.compare(plainTextPass, this.password)
+}
+
+// comparePassword(req.body.password, user.password)
 
 const User = mongoose.model("user", userSchema)
 
