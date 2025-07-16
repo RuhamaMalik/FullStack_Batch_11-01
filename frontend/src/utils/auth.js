@@ -14,5 +14,9 @@ export const removeUser = () => localStorage.removeItem('user');
 export const isAuthorized = () => {
   const token = getToken();
   const user = getUser();
-  return !!token && !!user;
+  return !!token && !!user; /// Boolean(token)
 };
+
+// "rumaha" !username === flase
+// "rumaha" !!username === true
+// 0 !!username === flase

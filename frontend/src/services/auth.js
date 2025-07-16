@@ -4,7 +4,7 @@ export const fetchUserFromServer = async () => {
   const token = getToken();
   if (!token) return null;
 
-  const res = await axios.get(`${import.meta.env.VITE_API_URL}/auth/currentUser`, {
+  const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/auth/profile`, {
     headers: { Authorization: `Bearer ${token}` },
   });
 
