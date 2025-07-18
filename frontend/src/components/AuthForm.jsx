@@ -1,8 +1,62 @@
 import React, { useState } from "react";
+import {useNavigate} from "react-router-dom";
+import axios from "axios";
+
+import { setToken, setUser } from "../utils/auth";
 
 const AuthForm = () => {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("login");
   const [showPassword, setShowPassword] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    contact: "",
+    password: ""
+  });
+
+
+  const handleChange = (e) => {
+    setFormData(
+      {
+        ...formData,
+        [e.target.name]: e.target.value,
+      }
+    )
+  }
+
+
+  const handleSignUp = async (e) => {
+    e.preventDefault();
+    try {
+
+      const { data } = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/signup`, formData)
+      if (data.success) {
+             console.log("signup data >>>>>>>>>>>>>>>>> ", data);
+             setToken(data.token);
+             setUser(data.user)
+        /// reset form
+        setFormData(
+          {
+            name: "",
+            email: "",
+            contact: "",
+            password: ""
+          }
+        );
+        navigate("/")
+
+      } else {
+        console.log("Signup Fail ", data.message);
+      }
+
+    } catch {
+      (e) => {
+        console.log("Signup Failed : ", e);
+
+      }
+    }
+  }
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -10,21 +64,19 @@ const AuthForm = () => {
         <div className="flex justify-around mb-6">
           <button
             onClick={() => setActiveTab("login")}
-            className={`px-4 py-2 font-semibold rounded-full transition duration-300 ${
-              activeTab === "login"
-                ? "text-red-600 border-b-2 border-red-600"
-                : "text-gray-600 hover:text-red-600"
-            }`}
+            className={`px-4 py-2 font-semibold rounded-full transition duration-300 ${activeTab === "login"
+              ? "text-red-600 border-b-2 border-red-600"
+              : "text-gray-600 hover:text-red-600"
+              }`}
           >
             Login
           </button>
           <button
             onClick={() => setActiveTab("create")}
-            className={`px-4 py-2 font-semibold rounded-full transition duration-300 ${
-              activeTab === "create"
-                ? "text-red-600 border-b-2 border-red-600"
-                : "text-gray-600 hover:text-red-600"
-            }`}
+            className={`px-4 py-2 font-semibold rounded-full transition duration-300 ${activeTab === "create"
+              ? "text-red-600 border-b-2 border-red-600"
+              : "text-gray-600 hover:text-red-600"
+              }`}
           >
             Create Account
           </button>
@@ -67,34 +119,47 @@ const AuthForm = () => {
         )}
 
         {activeTab === "create" && (
-          <form className="space-y-4">
+          <form onSubmit={handleSignUp} className="space-y-4">
             <div>
-              <label className="block mb-1 text-gray-700">First Name</label>
+              <label className="block mb-1 text-gray-700">Full Name</label>
               <input
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
                 type="text"
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
-                placeholder="Enter your first name"
-              />
-            </div>
-            <div>
-              <label className="block mb-1 text-gray-700">Last Name</label>
-              <input
-                type="text"
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
-                placeholder="Enter your last name"
+                placeholder="Enter your full name"
               />
             </div>
             <div>
               <label className="block mb-1 text-gray-700">Email</label>
               <input
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
                 type="email"
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
                 placeholder="Enter your email"
               />
             </div>
             <div>
+              <label className="block mb-1 text-gray-700">Contact</label>
+              <input
+                name="contact"
+                value={formData.contact}
+                onChange={handleChange}
+                type="text"
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
+                placeholder="Enter your Number"
+              />
+            </div>
+
+            <div>
               <label className="block mb-1 text-gray-700">Password</label>
               <input
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
                 type="password"
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
                 placeholder="Enter your password"

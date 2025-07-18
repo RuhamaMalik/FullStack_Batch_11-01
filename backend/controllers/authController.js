@@ -18,7 +18,7 @@ export const signUp = async (req, res) => {
     const isExist = await User.findOne({ email });
 
     if (isExist) {
-      res.status(400).json({
+      res.status(200).json({
         success: false,
         message: "User Already Registered!"
       })

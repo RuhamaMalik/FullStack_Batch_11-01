@@ -33,6 +33,8 @@ const router = createBrowserRouter([
                     </ProtectedRoute>
                 ),
             },
+            // { path: '/auth', element: <AuthForm />}
+       
         ],
     },
     { path: '/auth', element: <AuthForm />}
