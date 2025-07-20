@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 
 import { setToken, setUser } from "../utils/auth";
@@ -32,9 +34,10 @@ const AuthForm = () => {
 
       const { data } = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/signup`, formData)
       if (data.success) {
-             console.log("signup data >>>>>>>>>>>>>>>>> ", data);
-             setToken(data.token);
-             setUser(data.user)
+           toast.success(data.message);
+        console.log("signup data >>>>>>>>>>>>>>>>> ", data);
+        setToken(data.token);
+        setUser(data.user)
         /// reset form
         setFormData(
           {
@@ -48,11 +51,14 @@ const AuthForm = () => {
 
       } else {
         console.log("Signup Fail ", data.message);
+        toast.error("Signup fail!", data.message);
       }
 
     } catch {
       (e) => {
+        toast.error(`Error: ${e.message}`);
         console.log("Signup Failed : ", e);
+
 
       }
     }
@@ -174,6 +180,7 @@ const AuthForm = () => {
           </form>
         )}
       </div>
+      <ToastContainer position="top-center" theme="light" />
     </div>
   );
 };
