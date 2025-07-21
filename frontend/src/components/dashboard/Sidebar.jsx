@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 // iconss  ///
 import {
@@ -15,10 +15,12 @@ import { LuMessageSquareText } from "react-icons/lu";
 import { RxCross2 } from "react-icons/rx";
 // framer motion //
 import { motion, AnimatePresence } from "framer-motion";
+import { removeToken, removeUser } from "../../utils/auth";
 
 
 const Sidebar = ({ isMobileOpen, setIsMobileOpen }) => {
     const [collapsed, setCollapsed] = useState(false);
+    const navigate = useNavigate()
 
     // navlinks
     const menuItems = [
@@ -32,6 +34,13 @@ const Sidebar = ({ isMobileOpen, setIsMobileOpen }) => {
         { name: "Setting", icon: <IoSettingsOutline />, path: "/Setting" },
     ];
 
+
+    const handleLogout = ()=>{
+        removeUser();
+        removeToken();
+        navigate("/");
+    }
+
     return (
         <>
             <div
@@ -41,7 +50,7 @@ const Sidebar = ({ isMobileOpen, setIsMobileOpen }) => {
             >
                 {/* //////// heading and collapdes ///////// */}
                 <div className="p-4 flex items-center justify-between border-b border-gray-700">
-                    {!collapsed && <h2 className="text-xl font-bold">Admin Panel</h2>}
+                    {!collapsed && <h2 className="text-xl font-bold">User Account</h2>}
 
                     {/* sidebtn */}
                     <button onClick={() => setCollapsed(!collapsed)} className="text-xl">
@@ -57,10 +66,17 @@ const Sidebar = ({ isMobileOpen, setIsMobileOpen }) => {
                             to={item.path}
                             className="flex items-center gap-3 hover:bg-red-500 px-3 py-2 rounded transition text-sm"
                         >
+
                             <span className="text-xl">{item.icon}</span>
                             {!collapsed && <span>{item.name}</span>}
                         </Link>
                     ))}
+                    <div
+                        onClick={() =>{ setIsMobileOpen(false); handleLogout()}}
+                        className="flex items-center gap-3 hover:bg-red-500 px-3 py-2 rounded transition text-sm"
+                    >
+                        <span>Logout</span>
+                    </div>
                 </nav>
             </div>
 
@@ -106,6 +122,14 @@ const Sidebar = ({ isMobileOpen, setIsMobileOpen }) => {
                                         <span>{item.name}</span>
                                     </Link>
                                 ))}
+                                <div
+
+                                    onClick={() => {setIsMobileOpen(false); handleLogout()}}
+                                    className="flex items-center gap-3 hover:bg-red-500 px-3 py-2 rounded transition text-sm"
+                                >
+
+                                    <span>Logout</span>
+                                </div>
                             </nav>
                         </motion.div>
 

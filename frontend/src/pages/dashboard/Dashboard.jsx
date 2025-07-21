@@ -1,6 +1,6 @@
 // src/pages/Dashboard.jsx
-import WelcomeBox from "../components/WelcomeBox";
-import DashboardCard from "../components/DashboardCard";
+import WelcomeBox from "../../components/dashboard/WelcomeBox";
+import DashboardCard from "../../components/dashboard/DashboardCard";
 
 // icons
 import { MdShoppingCart, MdGroup, MdAttachMoney, MdInventory } from "react-icons/md";

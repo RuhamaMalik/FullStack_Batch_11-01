@@ -1,7 +1,7 @@
 // src/layout/DashboardLayout.jsx
 import { useState } from "react";
-import Sidebar from "../components/Sidebar";
-import Topbar from "../components/Topbar";
+import Sidebar from "../components/dashboard/Sidebar";
+import Topbar from "../components/dashboard/Topbar";
 import { Outlet } from "react-router-dom";
 
 function DashboardLayout() {
