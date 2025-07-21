@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import { setToken, setUser } from "../utils/auth";
@@ -32,9 +32,9 @@ const AuthForm = () => {
 
       const { data } = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/signup`, formData)
       if (data.success) {
-             console.log("signup data >>>>>>>>>>>>>>>>> ", data);
-             setToken(data.token);
-             setUser(data.user)
+        console.log("signup data >>>>>>>>>>>>>>>>> ", data);
+        setToken(data.token);
+        setUser(data.user)
         /// reset form
         setFormData(
           {
@@ -57,6 +57,42 @@ const AuthForm = () => {
       }
     }
   }
+
+
+
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+
+      const { data } = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/signin`,
+        { email: formData.email, password: formData.password })
+      if (data.success) {
+        setToken(data.token);
+        setUser(data.user)
+        /// reset form
+        setFormData(
+          {
+            name: "",
+            email: "",
+            contact: "",
+            password: ""
+          }
+        );
+        navigate("/")
+
+      } else {
+        console.log("Login Fail ", data.message);
+      }
+
+    } catch {
+      (e) => {
+        console.log("Login Failed : ", e);
+
+      }
+    }
+  }
+
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -83,10 +119,13 @@ const AuthForm = () => {
         </div>
 
         {activeTab === "login" && (
-          <form className="space-y-4">
+          <form onSubmit={handleLogin} className="space-y-4">
             <div>
               <label className="block mb-1 text-gray-700">Email</label>
               <input
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
                 type="email"
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
                 placeholder="Enter your email"
@@ -96,12 +135,15 @@ const AuthForm = () => {
               <label className="block mb-1 text-gray-700">Password</label>
               <div className="relative">
                 <input
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
                   type={showPassword ? "text" : "password"}
                   className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
                   placeholder="Enter your password"
                 />
                 <button
-                  type="button"
+                  type="submit"
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute inset-y-0 right-0 px-3 py-2 text-sm text-gray-600 hover:text-red-600"
                 >
