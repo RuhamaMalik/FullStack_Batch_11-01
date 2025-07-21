@@ -14,7 +14,7 @@ const navigate = useNavigate();
   const menu = [
     { title: "HOME", items: ["Dashboard", "Settings"] },
     { title: "SHOP", items: ["Products", "Cart"] },
-    { title: "PAGES", items: ["About Us", "Contact"] },
+    { title: "PAGES", items: ["PrivacyPolicy", "RefundPolicy", "TermsOfService", "FAQS", "About Us", "Contact"] },
   ];
 
   const containerVariants = {
