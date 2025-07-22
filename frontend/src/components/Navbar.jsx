@@ -39,7 +39,7 @@ const navigate = useNavigate();
             <div className="hidden md:flex items-center space-x-3 rtl:space-x-reverse">
               <span> Email: <b> email@email.com </b></span>
               <span className="p-5">|</span>
-              <span> Today’s Deal: <b> Sale Off 50% </b></span>
+              <span> Todays Deal: <b> Sale Off 50% </b></span>
             </div>
           </div>
 
@@ -51,7 +51,7 @@ const navigate = useNavigate();
             <span className="p-lg-5 p-2 hidden md:flex items-center">|</span>
 
             <div>
-              <button id="multiLevelDropdownButton" data-dropdown-toggle="multi-dropdown" className="text-black  hover:text-red-500 focus:ring-4 focus:outline-none focus:hidden  rounded-lg  ps-5 m-1 py-2.5 text-center inline-flex items-center " type="button">Currency<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#000" d="m7 10l5 5l5-5z" stroke-width="0.2" stroke="#000" /></svg>
+              <button id="multiLevelDropdownButton" data-dropdown-toggle="multi-dropdown" className="text-black  hover:text-red-500 focus:ring-4 focus:outline-none focus:hidden  rounded-lg  ps-5 m-1 py-2.5 text-center inline-flex items-center " type="button">Currency<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#000" d="m7 10l5 5l5-5z" strokeWidth="0.2" stroke="#000" /></svg>
               </button>
 
               {/* <!-- Dropdown menu --> */}
@@ -75,7 +75,7 @@ const navigate = useNavigate();
             <span className="p-lg-5 p-2">|</span>
             <div>
 
-              <button id="multiLevelDropdownButton2" data-dropdown-toggle="multi-dropdown2" className="text-black  hover:text-red-500 focus:ring-4 focus:outline-none focus:hidden rounded-lg  p-1 m-1 py-2.5 text-center inline-flex items-center " type="button">Language <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#000" d="m7 10l5 5l5-5z" stroke-width="0.2" stroke="#000" /></svg>
+              <button id="multiLevelDropdownButton2" data-dropdown-toggle="multi-dropdown2" className="text-black  hover:text-red-500 focus:ring-4 focus:outline-none focus:hidden rounded-lg  p-1 m-1 py-2.5 text-center inline-flex items-center " type="button">Language <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#000" d="m7 10l5 5l5-5z" strokeWidth="0.2" stroke="#000" /></svg>
               </button>
 
               {/* <!-- Dropdown menu --> */}
@@ -112,7 +112,7 @@ const navigate = useNavigate();
             <div className=" flex mt-3 mb-3  border border-gray-300   dark:border-gray-600">
               <label className="mb-2 text-sm font-medium  text-white sr-only dark:text-white">Your Email</label>
               <button id="dropdown-button" data-dropdown-toggle="dropdown" className="hidden lg:flex shrink-0 z-10  items-center py-2.5 px-4 text-sm font-medium text-center   " type="button">Blogs <svg className="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
+                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
               </svg>
               </button>
 
@@ -139,7 +139,7 @@ const navigate = useNavigate();
               <div className="relative w-full">
                 <input type="search" id="search-dropdown" className="block p-2.5 w-full z-20 text-sm focus:ring-red-500 border-0  text-white    " placeholder="Search Our Store . . . " required />
                 <button type="submit" className="absolute top-0 end-0 p-2.5 text-sm font-medium h-full focus:hidden">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#000" d="M9.5 16q-2.725 0-4.612-1.888T3 9.5t1.888-4.612T9.5 3t4.613 1.888T16 9.5q0 1.1-.35 2.075T14.7 13.3l5.6 5.6q.275.275.275.7t-.275.7t-.7.275t-.7-.275l-5.6-5.6q-.75.6-1.725.95T9.5 16m0-2q1.875 0 3.188-1.312T14 9.5t-1.312-3.187T9.5 5T6.313 6.313T5 9.5t1.313 3.188T9.5 14" stroke-width="0.2" stroke="#000" /></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#000" d="M9.5 16q-2.725 0-4.612-1.888T3 9.5t1.888-4.612T9.5 3t4.613 1.888T16 9.5q0 1.1-.35 2.075T14.7 13.3l5.6 5.6q.275.275.275.7t-.275.7t-.7.275t-.7-.275l-5.6-5.6q-.75.6-1.725.95T9.5 16m0-2q1.875 0 3.188-1.312T14 9.5t-1.312-3.187T9.5 5T6.313 6.313T5 9.5t1.313 3.188T9.5 14" strokeWidth="0.2" stroke="#000" /></svg>
                   <span className="sr-only">Search</span>
                 </button>
               </div>
@@ -161,7 +161,7 @@ const navigate = useNavigate();
             <div className="relative">
               <span className="bg-red-500 text-white px-1 -top-2 ml-5 absolute  overflow-hidden rounded-xl">0</span>
               <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="#000"
-                stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+                strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8"
                 d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4a2 2 0 0 0 0-4m8 0a2 2 0 1 0 0 4a2 2 0 0 0 0-4m-8.5-3h9.25L19 7H7.312" /></svg>
             </div>
           </div>

@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import {useNavigate} from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import { setToken, setUser } from "../utils/auth";
@@ -32,9 +32,10 @@ const AuthForm = () => {
 
       const { data } = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/signup`, formData)
       if (data.success) {
-             console.log("signup data >>>>>>>>>>>>>>>>> ", data);
-             setToken(data.token);
-             setUser(data.user)
+        console.log("signup data >>>>>>>>>>>>>>>>> ", data);
+        setToken(data.token);
+        setUser(data.user)
+
         /// reset form
         setFormData(
           {
