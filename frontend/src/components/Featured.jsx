@@ -52,10 +52,10 @@ const Featured = () => {
 
     return (
         <>
-            <div className="  mt-5 bg-white flex flex-wrap items-center justify-center gap-5 mx-auto p-1">
+            <div className="  mt-5  flex flex-wrap items-center justify-center gap-5 mx-auto p-1">
                 <div className="flex flex-wrap gap-6 p-6 justify-center">
                     {features.map(({ title, icon, color }, idx) => (
-                        <div key={idx} className="w-[250px] bg-gray-100 rounded-xl shadow-lg overflow-hidden pt-10   text-center">
+                        <div key={idx} className="w-[235px] bg-gray-100 rounded-xl shadow-lg overflow-hidden pt-10   text-center">
                             <div className="flex flex-col items-center pb-6">{icon}</div>
                             <hr className={`${color} border-0 h-2`} />
                             <div className="flex flex-col items-center pb-5 bg-gray-200 hover:bg-white ">

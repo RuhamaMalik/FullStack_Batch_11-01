@@ -10,7 +10,6 @@ export const getUser = () => {
 export const removeUser = () => localStorage.removeItem('user');
 
 
-
 export const isAuthorized = () => {
   const token = getToken();
   const user = getUser();
