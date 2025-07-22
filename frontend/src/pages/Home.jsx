@@ -2,6 +2,8 @@ import Featured from "../components/Featured"
 import Hero from "../components/Hero"
 import CardSlider from "../components/cardSlider"
 import TopProducts from "../components/TopProducts"
+import { Outlet } from 'react-router-dom';
+
 
 
 const Home = () => {
@@ -11,6 +13,7 @@ const Home = () => {
             <Featured />
             <CardSlider/>
             <TopProducts/>
+            <Outlet/>
         </>
     )
 }
