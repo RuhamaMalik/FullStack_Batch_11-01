@@ -3,10 +3,20 @@ import { useState } from "react";
 import Sidebar from "../components/dashboard/Sidebar";
 import Topbar from "../components/dashboard/Topbar";
 import { Outlet } from "react-router-dom";
+import { useAuthContext } from "../context/AuthContext";
 
 function DashboardLayout() {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   //  const [collapsed, setCollapsed] = useState(false);
+  
+  const { loading} = useAuthContext();
+  if(loading){
+     return (
+    <>
+     <h1> Loading... </h1>
+    </>
+  )
+  }
 
   return (
     <div className="flex min-h-screen bg-gray-100">
