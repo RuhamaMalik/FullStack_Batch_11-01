@@ -1,6 +1,30 @@
 @import "tailwindcss";
 @import 'flowbite';
 
+body {
+    background-color: #e3e2e570;
+}
+
+/********* scrollbar css ************/
+::-webkit-scrollbar {
+    width: 3px !important;
+}
+
+::-webkit-scrollbar-track {
+    background: #000000 !important;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #696969 !important;
+    border-radius: 10px !important;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555 !important;
+    transition: transform 0.9s linear, background-color 0.9s linear;
+}
+
+/* //--------------------------------------------------------------------- */
 
 @media (max-width: 1340px) {
     .hide {
@@ -18,40 +42,8 @@
     .navfull {
         width: 100% !important;
     }
-}
 
-@keyframes scroll {
-    0% {
-        transform: translateX(0);
+    .searchinput {
+        width: 300px;
     }
-
-    100% {
-        transform: translateX(calc(-250px * 7));
-    }
-}
-
-.slide-track {
-    animation: scroll 40s linear infinite;
-    display: flex;
-    width: calc(250px * 14);
-}
-
-.custom-container {
-    background-color: red;
-    height: 200px;
-    border-radius: 20px;
-}
-
-.custom-input {
-    border-radius: 0px;
-    height: 45px;
-}
-
-.button {
-    background-color: white;
-    color: black;
-    border: none;
-    height: 45px;
-    border-radius: 0;
-    padding: 0 20px;
 }
