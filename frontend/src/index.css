@@ -43,7 +43,18 @@ body {
         width: 100% !important;
     }
 
+    .navfulltab {
+        width: 100% !important;
+        background: #000;
+        width: 100% !important;
+        display: flex !important;
+        justify-content: center !important; 
+        align-items: center !important;
+        text-align: center !important;
+    }
+
     .searchinput {
         width: 300px;
     }
 }
+ 

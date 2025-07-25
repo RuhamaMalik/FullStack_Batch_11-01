@@ -5,7 +5,7 @@ const Hero = () => {
         <>
             <div className="max-w-screen-xl bg-black flex flex-wrap items-center justify-center gap-6 mx-auto p-1">
 
-                <div className="lg:w-[75%] sm:w-full bg-gray-100 lg:h-[530px] ">
+                <div className="lg:w-[75%] sm:w-full lg:h-[550px] flex justify-center items-center relative overflow-hidden">
                     <div className="">
                         <video
                             className="w-full h-full object-cover pointer-events-none" autoPlay muted loop playsInline >
