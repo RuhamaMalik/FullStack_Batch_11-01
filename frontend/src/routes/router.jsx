@@ -6,6 +6,8 @@ import ProtectedRoute from '../components/ProtectedRoute';
 import AuthForm from '../components/AuthForm';
 import Home from '../pages/Home';
 import DashboardLayout from '../layout/DashboardLayout';
+import ForgotPswd from '../pages/ForgotPswd';
+import ResetPaswd from '../pages/ResetPaswd';
 
 const router = createBrowserRouter([
     {
@@ -67,9 +69,16 @@ const router = createBrowserRouter([
 
         ],
     },
+    {
+        path: 'reset-password',
+        element: <ResetPaswd />,
+    },
 
 
-
+    {
+        path: 'forgot-password',
+        element: <ForgotPswd />,
+    },
     { path: '/auth', element: <AuthForm /> }
 ]);
 
