@@ -1,9 +1,5 @@
-<<<<<<< HEAD
-
-=======
 import { Navigate } from 'react-router-dom';
 import { getToken, getUser } from '../utils/auth';
->>>>>>> 9dd38e9b3a4ca8e38ba34f74a48406760b8cf6e6
 
 const ProtectedRoute = ({ children, role }) => {
   const token = getToken();
