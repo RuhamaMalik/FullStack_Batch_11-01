@@ -23,7 +23,7 @@ const Sidebar = ({ isMobileOpen, setIsMobileOpen }) => {
     // navlinks
     const menuItems = [
         { name: "Dashboard", icon: <MdOutlineDashboard />, path: "/Dashboard" },
-        { name: "Products", icon: <MdOutlineInventory2 />, path: "/Products" },
+        { name: "Products", icon: <MdOutlineInventory2 />, path: "/products" },
         { name: "Customers", icon: <IoPeopleOutline />, path: "/Customers" },
         { name: "Messages", icon: <LuMessageSquareText />, path: "/Messages" },
         { name: "Analytics", icon: <TbBrandGoogleAnalytics />, path: "/Analytics" },
