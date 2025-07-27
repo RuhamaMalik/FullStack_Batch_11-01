@@ -1,10 +1,19 @@
 
 import React, { useState } from "react";
 
+import Drawer from "../components/Drawer";
+
 const Products = () => {
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 4;
+  
+
+
+
+  ////Fatima's branch
+
+  let [openDrawer, setOpenDrawer] = useState(false);
 
   //**************************** */ Dummy data for products**************************** */
   const dummyData = [
@@ -103,9 +112,17 @@ const Products = () => {
           }}
           className="border border-gray-300 rounded px-4 py-2 w-full sm:max-w-sm"
         />
-        <button className="bg-red-600 text-white px-4 py-2 rounded w-full sm:w-auto hover:bg-red-700 transition-all">
-          Add Category
+
+        {/* isDrawerOpen here */}
+        <button
+        onClick={() => setOpenDrawer(true)}
+        className="bg-red-600 text-white px-4 py-2 rounded w-full sm:w-auto hover:bg-red-700 transition-all">
+           Add Product
         </button>
+
+        {/* drawer */}
+       <Drawer isOpen={openDrawer} onClose={() => setOpenDrawer(false)} />
+
       </div>
 
       {/*****************************  Responsive Table **************************** */}
