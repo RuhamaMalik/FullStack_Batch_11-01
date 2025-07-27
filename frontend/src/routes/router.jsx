@@ -8,6 +8,8 @@ import Home from '../pages/Home';
 import DashboardLayout from '../layout/DashboardLayout';
 import ForgotPswd from '../pages/ForgotPswd';
 import ResetPaswd from '../pages/ResetPaswd';
+import Wishlist from '../pages/Wishlist';
+import Products from '../pages/Products';
 
 const router = createBrowserRouter([
     {
@@ -19,6 +21,13 @@ const router = createBrowserRouter([
                 element: (
                     <Home />
                 ),
+            },
+
+                 {
+                path: 'wishlist',
+                element:( 
+                <Wishlist />
+            ),
             },
 
 
@@ -74,6 +83,12 @@ const router = createBrowserRouter([
         element: <ResetPaswd />,
     },
 
+     {
+                path: 'products',
+                element:( 
+                <Products/>
+            ),
+            },
 
     {
         path: 'forgot-password',
