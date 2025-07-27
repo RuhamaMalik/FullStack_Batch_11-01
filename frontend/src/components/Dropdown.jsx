@@ -174,12 +174,8 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-<<<<<<< HEAD
-import { NavLink } from "react-router-dom";
-=======
 import { NavLink, useNavigate } from "react-router-dom";
 import { categoryMenuItems } from "../config/siteSettings";
->>>>>>> 9dd38e9b3a4ca8e38ba34f74a48406760b8cf6e6
 
 const Dropdown = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -188,6 +184,7 @@ const Dropdown = () => {
     const [openNestedIndex, setOpenNestedIndex] = useState(null);
 
 
+    
     //   Updated with titles and paths
     const items = [
         { title: "Audio & Home Theater", path: "/audio" },
