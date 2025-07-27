@@ -1,8 +1,9 @@
-import  { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate , NavLink} from "react-router-dom";
 import axios from "axios";
 
 import { setToken, setUser } from "../utils/auth";
+import ForgotPswd from "../pages/ForgotPswd";
 
 const AuthForm = () => {
   const navigate = useNavigate();
@@ -151,6 +152,15 @@ const AuthForm = () => {
                 </button>
               </div>
             </div>
+         
+         <NavLink to="/forgot-password"  >
+          <button
+              className="w-full px-4 py-2 text-white bg-red-600 rounded-lg hover:bg-red-700 transition-transform transform hover:scale-105"
+            >
+             Forgot Password
+            </button>
+         </NavLink>
+
             <button
               type="submit"
               className="w-full px-4 py-2 text-white bg-red-600 rounded-lg hover:bg-red-700 transition-transform transform hover:scale-105"
