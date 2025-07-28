@@ -1,15 +1,47 @@
+import axios from 'axios';
 import React, { useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom';
 
 const ResetPaswd = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState("");
+  const [error, setError] = useState("");
+  const {token} = useParams();
+  const navigate = useNavigate()
+
+  
 
 
-  const handleResetPswd = async () => {
+  const handleResetPswd = async (e) => {
     e.preventDefault();
+    try {
+      const { data } = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/reset-pswd`, { token,password })
+      setPassword("");
+      setConfirmPassword("");
+      console.log(data?.message);
+      navigate("/auth");
+      
+    } catch {
+      (e) => {
+        console.log("Reset Password Failed : ", e);
+
+      }
+    }
+
+
   }
 
+
+  const handleConfirmPassword = (e) => {
+    setConfirmPassword(e.target.value);
+    if (!password.includes(e.target.value)) {
+      setError("Password not match")
+    } else {
+      setError("")
+    }
+
+  }
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -43,7 +75,7 @@ const ResetPaswd = () => {
               <input
                 name="password"
                 value={confirmPassword}
-                onChange={(e) => { setConfirmPassword(e.target.value);   }}
+                onChange={handleConfirmPassword}
                 type={showPassword ? "text" : "password"}
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
                 placeholder="Confirm your password"
@@ -58,8 +90,11 @@ const ResetPaswd = () => {
             </div>
           </div>
 
+          {error && <p className='text-red-500'>{error}</p>}
+
 
           <button
+
             type="submit"
             className="w-full px-4 py-2 text-white bg-red-600 rounded-lg hover:bg-red-700 transition-transform transform hover:scale-105"
           >

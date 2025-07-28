@@ -103,11 +103,11 @@ console.log(">>>>>>>>>>>>> ");
 
   const resetToken = jwt.sign({ id: user._id },
     process.env.JWT_SECRET,
-    { expiresIn: "1m" })
+    { expiresIn: "2m" })
 
   // reset frontend url
 
-  const resetURL = `${process.env.WEBSITE_URL}/reset-password?token=${resetToken}`
+  const resetURL = `${process.env.WEBSITE_URL}/reset-password/${resetToken}`
 
   try {
 
@@ -139,6 +139,51 @@ console.log(">>>>>>>>>>>>> ");
   }
 
 }
+  
+///////////// Reset Password
+
+export const ResetPswd = async (req, res) => {
+  const {token , password}= req.body
+  try {
+    
+ const decoded = jwt.verify(token , process.env.JWT_SECRET);
+
+ const user = await User.findById(decoded.id);
+
+   if (!user) {
+    return res.status(404).json({
+      success: false,
+      message: "User not found"
+    });
+  }
+
+
+  ///// update user paswd
+
+  user.password = password;
+
+  user.save();
+
+
+  res.status(200).json({
+    success:true,
+    message:"Password updated successfully!"
+  })
+
+  } catch (error) {
+      res.status(500).json({
+      success: false,
+      message: "Password Reset Failed",
+      error: error.message
+    });
+  }
+}
+
+
+
+
+
+
 
 //////// profile
 
