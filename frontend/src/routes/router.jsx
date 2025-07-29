@@ -6,7 +6,6 @@ import ProtectedRoute from '../components/ProtectedRoute';
 import AuthForm from '../components/AuthForm';
 import Home from '../pages/Home';
 import DashboardLayout from '../layout/DashboardLayout';
-<<<<<<< HEAD
 import Orders from '../components/dashboard/components/Orders';
 import Products from '../components/dashboard/components/Products';
 import Saved from '../components/dashboard/components/Saved';
@@ -15,10 +14,8 @@ import Customers from '../components/dashboard/components/Customers';
 import Analytics from '../components/dashboard/components/Analytics';
 import Setting from '../components/dashboard/components/Setting';
 import Profile from '../components/dashboard/components/Profile';
-=======
 import ForgotPswd from '../pages/ForgotPswd';
 import ResetPaswd from '../pages/ResetPaswd';
->>>>>>> 5228593e6f761cde7319547daac16b030d8ea5a9
 
 const router = createBrowserRouter([
     {
