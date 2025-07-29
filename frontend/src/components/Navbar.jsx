@@ -100,10 +100,10 @@ const Navbar = () => {
       title: "PAGES",
       defaultPath: "/Privacy Policy",
       items: [
-        { title: "Privacy Policy ", path: "/privacyPolicy " },
-        { title: "Refund Policy ", path: "/refundPolicy " },
-        { title: "Terms of Service ", path: "/termsOfService " },
-        { title: "FAQs             ", path: "/faqs             " },
+        { title: "Privacy Policy ", path: "/privacy-policy" },
+        { title: "Refund Policy ", path: "/refund-policy" },
+        { title: "Terms of Service ", path: "/terms-of-services" },
+        { title: "FAQs             ", path: "/faqs" },
       ],
     },
   ];

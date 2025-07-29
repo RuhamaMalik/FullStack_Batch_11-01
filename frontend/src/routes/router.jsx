@@ -5,6 +5,10 @@ import AdminPanel from '../pages/AdminPanel';
 import ProtectedRoute from '../components/ProtectedRoute';
 import AuthForm from '../components/AuthForm';
 import Home from '../pages/Home';
+import PrivacyPolicy from '../pages/PrivacyPolicy';
+import RefundPolicy from '../pages/RefundPolicy';
+import FAQS from '../pages/FAQS';
+import TermsOfServices from '../pages/TermsOfService';
 import DashboardLayout from '../layout/DashboardLayout';
 import Orders from '../components/dashboard/components/Orders';
 import Products from '../components/dashboard/components/Products';
@@ -28,7 +32,30 @@ const router = createBrowserRouter([
                     <Home />
                 ),
             },
-
+            {
+                path: 'faqs',
+                element: (
+                    <FAQS />
+                ),
+            },
+            {
+                path: 'terms-of-services',
+                element: (
+                    <TermsOfServices />
+                ),
+            },
+            {
+                path: 'privacy-policy',
+                element: (
+                    <PrivacyPolicy />
+                ),
+            },
+            {
+                path: 'refund-policy',
+                element: (
+                    <RefundPolicy />
+                ),
+            },
 
             {
                 path: 'admin',
