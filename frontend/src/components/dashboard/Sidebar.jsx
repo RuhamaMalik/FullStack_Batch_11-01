@@ -62,7 +62,7 @@ const Sidebar = ({ isMobileOpen, setIsMobileOpen }) => {
             >
                 {/* //////// heading and collapdes ///////// */}
                 <div className="p-4 flex items-center justify-between border-b border-gray-700">
-                    {!collapsed && <h2 className="text-xl font-bold">User Account</h2>}
+                    {!collapsed && <h2 className="text-xl font-bold">{user.role==="admin" ? "Admin Panel":"User Account"}</h2>}
 
                     {/* sidebtn */}
                     <button onClick={() => setCollapsed(!collapsed)} className="text-xl">
