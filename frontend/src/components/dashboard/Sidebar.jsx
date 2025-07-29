@@ -1,4 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
+import { IoMdLogOut } from "react-icons/io";
 import { useState } from "react";
 // iconss  ///
 import {
@@ -24,14 +25,14 @@ const Sidebar = ({ isMobileOpen, setIsMobileOpen }) => {
 
     // navlinks
     const menuItems = [
-        { name: "Dashboard", icon: <MdOutlineDashboard />, path: "/Dashboard" },
-        { name: "Products", icon: <MdOutlineInventory2 />, path: "/Products" },
-        { name: "Customers", icon: <IoPeopleOutline />, path: "/Customers" },
-        { name: "Messages", icon: <LuMessageSquareText />, path: "/Messages" },
-        { name: "Analytics", icon: <TbBrandGoogleAnalytics />, path: "/Analytics" },
-        { name: "Orders", icon: <MdOutlineShoppingCart />, path: "/Orders" },
-        { name: "Saved", icon: <FaRegHeart />, path: "/Saved" },
-        { name: "Setting", icon: <IoSettingsOutline />, path: "/Setting" },
+        { name: "Dashboard", icon: <MdOutlineDashboard />, path: "/dashboard" },
+        { name: "Products", icon: <MdOutlineInventory2 />, path: "/products" },
+        { name: "Customers", icon: <IoPeopleOutline />, path: "/customers" },
+        { name: "Messages", icon: <LuMessageSquareText />, path: "/messages" },
+        { name: "Analytics", icon: <TbBrandGoogleAnalytics />, path: "/analytics" },
+        { name: "Orders", icon: <MdOutlineShoppingCart />, path: "/orders" },
+        { name: "Saved", icon: <FaRegHeart />, path: "/saved" },
+        { name: "Setting", icon: <IoSettingsOutline />, path: "/setting" },
     ];
 
 
@@ -70,11 +71,12 @@ const Sidebar = ({ isMobileOpen, setIsMobileOpen }) => {
                             <span className="text-xl">{item.icon}</span>
                             {!collapsed && <span>{item.name}</span>}
                         </Link>
-                    ))}
+                    ))} 
                     <div
                         onClick={() =>{ setIsMobileOpen(false); handleLogout()}}
                         className="flex items-center gap-3 hover:bg-red-500 px-3 py-2 rounded transition text-sm"
-                    >
+                    >   
+                    <IoMdLogOut />
                         <span>Logout</span>
                     </div>
                 </nav>
@@ -127,7 +129,7 @@ const Sidebar = ({ isMobileOpen, setIsMobileOpen }) => {
                                     onClick={() => {setIsMobileOpen(false); handleLogout()}}
                                     className="flex items-center gap-3 hover:bg-red-500 px-3 py-2 rounded transition text-sm"
                                 >
-
+                                    <IoMdLogOut />
                                     <span>Logout</span>
                                 </div>
                             </nav>
