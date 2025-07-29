@@ -16,27 +16,38 @@ import { LuMessageSquareText } from "react-icons/lu";
 import { RxCross2 } from "react-icons/rx";
 // framer motion //
 import { motion, AnimatePresence } from "framer-motion";
-import { removeToken, removeUser } from "../../utils/auth";
+import { getUser, removeToken, removeUser } from "../../utils/auth";
 
 
 const Sidebar = ({ isMobileOpen, setIsMobileOpen }) => {
     const [collapsed, setCollapsed] = useState(false);
+    const user = getUser();
     const navigate = useNavigate()
 
     // navlinks
-    const menuItems = [
-        { name: "Dashboard", icon: <MdOutlineDashboard />, path: "/dashboard" },
-        { name: "Products", icon: <MdOutlineInventory2 />, path: "/products" },
-        { name: "Customers", icon: <IoPeopleOutline />, path: "/customers" },
-        { name: "Messages", icon: <LuMessageSquareText />, path: "/messages" },
-        { name: "Analytics", icon: <TbBrandGoogleAnalytics />, path: "/analytics" },
-        { name: "Orders", icon: <MdOutlineShoppingCart />, path: "/orders" },
-        { name: "Saved", icon: <FaRegHeart />, path: "/saved" },
-        { name: "Setting", icon: <IoSettingsOutline />, path: "/setting" },
+    const adminTabs = [
+        { name: "Dashboard", icon: <MdOutlineDashboard />, path: "/admin/dashboard" },
+        { name: "Categories", icon: <FaRegHeart />, path: "/admin/categories" },
+        { name: "Products", icon: <MdOutlineInventory2 />, path: "/admin/products" },
+        { name: "Orders", icon: <MdOutlineShoppingCart />, path: "/admin/orders" },
+        { name: "Customers", icon: <IoPeopleOutline />, path: "/admin/customers" },
+        { name: "Messages", icon: <LuMessageSquareText />, path: "/admin/messages" },
+        { name: "Analytics", icon: <TbBrandGoogleAnalytics />, path: "/admin/analytics" },
+        { name: "Setting", icon: <IoSettingsOutline />, path: "/admin/settings" },
     ];
 
+    const userTabs = [
+        { name: "Account Settings", icon: <MdOutlineDashboard />, path: "/dashboard/account-settings" },
+        { name: "Orders", icon: <MdOutlineInventory2 />, path: "/dashboard/orders" },
+        { name: "Whishlist", icon: <IoPeopleOutline />, path: "/dashboard/whishlist" },
+        { name: "Address", icon: <LuMessageSquareText />, path: "/dashboard/address" },
+        { name: "Change Pasword", icon: <TbBrandGoogleAnalytics />, path: "/dashboard/change-password" },
+    ];
 
-    const handleLogout = ()=>{
+    const menuItems = user.role === 'admin' ? adminTabs : userTabs;
+
+
+    const handleLogout = () => {
         removeUser();
         removeToken();
         navigate("/");
@@ -71,12 +82,12 @@ const Sidebar = ({ isMobileOpen, setIsMobileOpen }) => {
                             <span className="text-xl">{item.icon}</span>
                             {!collapsed && <span>{item.name}</span>}
                         </Link>
-                    ))} 
+                    ))}
                     <div
-                        onClick={() =>{ setIsMobileOpen(false); handleLogout()}}
+                        onClick={() => { setIsMobileOpen(false); handleLogout() }}
                         className="flex items-center gap-3 hover:bg-red-500 px-3 py-2 rounded transition text-sm"
-                    >   
-                    <IoMdLogOut />
+                    >
+                        <IoMdLogOut />
                         <span>Logout</span>
                     </div>
                 </nav>
@@ -126,7 +137,7 @@ const Sidebar = ({ isMobileOpen, setIsMobileOpen }) => {
                                 ))}
                                 <div
 
-                                    onClick={() => {setIsMobileOpen(false); handleLogout()}}
+                                    onClick={() => { setIsMobileOpen(false); handleLogout() }}
                                     className="flex items-center gap-3 hover:bg-red-500 px-3 py-2 rounded transition text-sm"
                                 >
                                     <IoMdLogOut />

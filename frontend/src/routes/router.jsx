@@ -1,25 +1,25 @@
 import { createBrowserRouter } from 'react-router-dom';
 import App from '../App';
-// import Dashboard from '../pages/dashboard/Dashboard';
-import AdminPanel from '../pages/AdminPanel';
-import ProtectedRoute from '../components/ProtectedRoute';
-import AuthForm from '../components/AuthForm';
 import Home from '../pages/Home';
-import PrivacyPolicy from '../pages/PrivacyPolicy';
-import RefundPolicy from '../pages/RefundPolicy';
-import FAQS from '../pages/FAQS';
-import TermsOfServices from '../pages/TermsOfService';
+import ProtectedRoute from '../components/ProtectedRoute';
+
+import Orders from '../components/dashboard/admin/Orders';
+import Analytics from '../components/dashboard/admin/Analytics';
+import Messages from '../components/dashboard/admin/Messages';
+import Customers from '../components/dashboard/admin/Customers';
+import Products from '../components/dashboard/admin/Products';
+import Categories from '../components/dashboard/admin/Categories';
+import Setting from '../components/dashboard/admin/Setting';
+import AuthForm from '../components/AuthForm';
 import DashboardLayout from '../layout/DashboardLayout';
-import Orders from '../components/dashboard/components/Orders';
-import Products from '../components/dashboard/components/Products';
-import Saved from '../components/dashboard/components/Saved';
-import Messages from '../components/dashboard/components/Messages';
-import Customers from '../components/dashboard/components/Customers';
-import Analytics from '../components/dashboard/components/Analytics';
-import Setting from '../components/dashboard/components/Setting';
-import Profile from '../components/dashboard/components/Profile';
-import ForgotPswd from '../pages/ForgotPswd';
-import ResetPaswd from '../pages/ResetPaswd';
+
+import AccountSetting from '../components/dashboard/user/AccountSetting';
+import UserOrders from '../components/dashboard/user/Orders';
+import Address from '../components/dashboard/user/Address';
+import Whishlist from '../components/dashboard/user/Whishlist';
+import ChangePassword from '../components/dashboard/user/ChangePassword';
+import Dashboard from '../components/dashboard/admin/Dashboard';
+
 
 const router = createBrowserRouter([
     {
@@ -32,44 +32,14 @@ const router = createBrowserRouter([
                     <Home />
                 ),
             },
-            {
-                path: 'faqs',
-                element: (
-                    <FAQS />
-                ),
-            },
-            {
-                path: 'terms-of-services',
-                element: (
-                    <TermsOfServices />
-                ),
-            },
-            {
-                path: 'privacy-policy',
-                element: (
-                    <PrivacyPolicy />
-                ),
-            },
-            {
-                path: 'refund-policy',
-                element: (
-                    <RefundPolicy />
-                ),
-            },
 
-            {
-                path: 'admin',
-                element: (
-                    <ProtectedRoute role="admin">
-                        <AdminPanel />
-                    </ProtectedRoute>
-                ),
-            },
+
             // { path: '/auth', element: <AuthForm />}
 
         ],
     },
 
+    ////////// Dashboard 
 
     {
         path: 'dashboard',
@@ -85,83 +55,108 @@ const router = createBrowserRouter([
                 ),
             },
             {
+                path: 'account-settings',
+                element: (
+                    <AccountSetting />
+                ),
+            },
+            {
                 path: 'orders',
                 element: (
-                    <ProtectedRoute>
-                        <Orders />
-                    </ProtectedRoute>
+                    <UserOrders />
+                ),
+            },
+            {
+                path: 'whishlist',
+                element: (
+                    <Whishlist />
+                ),
+            },
+            {
+                path: 'address',
+                element: (
+                    <Address />
+                ),
+            },
+            {
+                path: 'change-password',
+                element: (
+                    <ChangePassword />
+                ),
+            },
+
+            // { path: '/auth', element: <AuthForm />}
+
+        ],
+    },
+
+
+    ////////// ADMIN 
+
+    {
+        path: 'admin',
+        element: (
+            <ProtectedRoute role="admin">
+                <DashboardLayout />
+            </ProtectedRoute>
+        ),
+        children: [
+            {
+                index: true,
+                element: (
+                    <Dashboard />
+                ),
+            },
+            {
+                path: "dashboard", element: (
+                    <Dashboard />
+                ),
+            },
+            {
+                path: 'orders',
+                element: (
+                    <Orders />
+                ),
+            },
+            {
+                path: 'categories',
+                element: (
+                    <Categories />
                 ),
             },
             {
                 path: 'products',
                 element: (
-                    <ProtectedRoute>
-                        <Products />
-                    </ProtectedRoute>
-                ),
-            },
-            {
-                path: 'saved',
-                element: (
-                    <ProtectedRoute>
-                        <Saved />
-                    </ProtectedRoute>
-                ),
-            },
-            {
-                path: 'messages',
-                element: (
-                    <ProtectedRoute>
-                        <Messages />
-                    </ProtectedRoute>
+                    <Products />
                 ),
             },
             {
                 path: 'customers',
                 element: (
-                    <ProtectedRoute>
-                        <Customers />
-                    </ProtectedRoute>
+                    <Customers />
                 ),
             },
             {
-                path: 'profile',
+                path: 'messages',
                 element: (
-                    <ProtectedRoute role="admin">
-                        <Profile />
-                    </ProtectedRoute>
+                    <Messages />
                 ),
             },
             {
                 path: 'analytics',
                 element: (
-                    <ProtectedRoute>
-                        <Analytics />
-                    </ProtectedRoute>
+                    <Analytics />
                 ),
             },
             {
-                path: 'setting',
+                path: 'settings',
                 element: (
-                    <ProtectedRoute>
-                        <Setting />
-                    </ProtectedRoute>
+                    <Setting />
                 ),
             },
-            // { path: '/auth', element: <AuthForm />}
-
-        ],
-    },
-    {
-        path: 'reset-password/:token',
-        element: <ResetPaswd />,
+        ]
     },
 
-
-    {
-        path: 'forgot-password',
-        element: <ForgotPswd />,
-    },
     { path: '/auth', element: <AuthForm /> }
 ]);
 
