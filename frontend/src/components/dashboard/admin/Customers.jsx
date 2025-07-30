@@ -9,7 +9,7 @@ import axios from "axios";
 const Customers = () => {
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 4;
+  const itemsPerPage = 5;
 
 
   //**************************** */ Dummy data for products**************************** */
@@ -150,11 +150,33 @@ const toggleStatus = async (userId) => {
   }
 };
 
+const handleDelete = async (userId) => {
+  
+  try {
+    const token = getToken();
+    const response = await axios.delete(
+     `${import.meta.env.VITE_BACKEND_URL}/users/${userId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    const updatedUsers = users.filter(user =>
+      user._id !== userId);
+
+    setUsers(updatedUsers);
+
+    console.log("User Deleted successfully:", response.data.message);
+  } catch (error) {
+    console.error("Error deleting user:", error.response?.data?.message || error.message);
+  }
+};
 
 
   //**************************** */ Search filter **************************** */
   const filteredData = users.filter((item) =>
-    item.name.toLowerCase().includes(search.toLowerCase())
+    item.name.toLowerCase().includes(search.toLowerCase()) ||  item.email.toLowerCase().includes(search.toLowerCase())
   );
 
 
@@ -245,7 +267,7 @@ const toggleStatus = async (userId) => {
 
                     {/* Delete button */}
                     <button
-                      onClick={() => handleDelete(rowData._id)}
+                      onClick={() => handleDelete(item._id)}
                       className="text-red-500 hover:text-red-700 transition"
                     >
                       <MdDelete size={18} />

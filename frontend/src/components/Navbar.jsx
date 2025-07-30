@@ -98,9 +98,9 @@ const Navbar = () => {
 
     {
       title: "PAGES",
-      defaultPath: "/Privacy Policy",
+      defaultPath: "/privacy-policy",
       items: [
-        { title: "Privacy Policy ", path: "/privacy-policy" },
+          { title: "Privacy Policy ", path: "/privacy-policy" },
         { title: "Refund Policy ", path: "/refund-policy" },
         { title: "Terms of Service ", path: "/terms-of-services" },
         { title: "FAQs             ", path: "/faqs" },

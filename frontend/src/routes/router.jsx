@@ -13,12 +13,19 @@ import Setting from '../components/dashboard/admin/Setting';
 import AuthForm from '../components/AuthForm';
 import DashboardLayout from '../layout/DashboardLayout';
 
+import PrivacyPolicy from '../pages/PrivacyPolicy';
+import RefundPolicy from '../pages/RefundPolicy';
+import FAQS from '../pages/FAQS';
+import TermsOfServices from '../pages/TermsOfService';
+
 import AccountSetting from '../components/dashboard/user/AccountSetting';
 import UserOrders from '../components/dashboard/user/Orders';
 import Address from '../components/dashboard/user/Address';
 import Whishlist from '../components/dashboard/user/Whishlist';
 import ChangePassword from '../components/dashboard/user/ChangePassword';
 import Dashboard from '../components/dashboard/admin/Dashboard';
+
+
 
 
 const router = createBrowserRouter([
@@ -33,7 +40,30 @@ const router = createBrowserRouter([
                 ),
             },
 
-
+            {
+                path: 'faqs',
+                element: (
+                    <FAQS />
+                ),
+            },
+            {
+                path: 'terms-of-services',
+                element: (
+                    <TermsOfServices />
+                ),
+            },
+            {
+                path: 'privacy-policy',
+                element: (
+                    <PrivacyPolicy />
+                ),
+            },
+            {
+                path: 'refund-policy',
+                element: (
+                    <RefundPolicy />
+                ),
+            },
             // { path: '/auth', element: <AuthForm />}
 
         ],

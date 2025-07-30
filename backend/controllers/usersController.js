@@ -10,6 +10,8 @@ export const getAllUsers = async (req, res) => {
   }
 };
 
+///////////// update
+
 export const updateUser = async (req, res) => {
   try {
     const userId = req.params.id;
@@ -60,7 +62,30 @@ export const updateUser = async (req, res) => {
   }
 };
 
+////////////// delete
 
+export const deleteUser = async (req,res)=>{
+try {
+   const userId = req.params.id;
+    const isAdmin = req.user.role === "admin";
+    const isSelf = req.user.id.toString() === userId;
+
+  if (!isAdmin && !isSelf) {
+      return res.status(403).json({ success: false, message: "Unauthorized access" });
+    }
+
+    await User.findByIdAndDelete(userId);
+
+    res.json({
+      success: true,
+      message: "User deleted successfully",
+    });
+
+} catch (error) {
+      res.status(500).json({ success: false, message: "Server error", error: error.message });
+
+}
+}
 
 
 // export const updateUserStatus = async (req, res) => {
