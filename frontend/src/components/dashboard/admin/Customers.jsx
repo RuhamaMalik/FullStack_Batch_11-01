@@ -2,6 +2,9 @@
 
 import React, { useState } from "react";
 import { MdDelete, MdEdit } from "react-icons/md";
+import { getToken } from "../../../utils/auth";
+import { useEffect } from "react";
+import axios from "axios";
 
 const Customers = () => {
   const [search, setSearch] = useState("");
@@ -10,88 +13,147 @@ const Customers = () => {
 
 
   //**************************** */ Dummy data for products**************************** */
-  const dummyData = [
-    {
-      id: 1,
-      name: "Rayan Ahmed",
-      email: "rayan.ahmed@example.com",
-      contact: "+92 300 1234567",
-      address: "Lahore, Pakistan",
-      image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&h=400&fit=crop",
-      status: true
-    },
-    {
-      id: 2,
-      name: "Mehak Ali",
-      email: "mehak.ali@example.com",
-      contact: "+92 345 7654321",
-      address: "Karachi, Pakistan",
-      image: "https://cdn.pixabay.com/photo/2022/02/11/09/21/leather-wallet-7006894_640.jpg",
-      status: false
-    },
-    {
-      id: 3,
-      name: "Talha Bashir",
-      email: "talha.bashir@example.com",
-      contact: "+92 321 5566778",
-      address: "Islamabad, Pakistan",
-      image: "https://cdn.pixabay.com/photo/2024/04/29/04/21/tshirt-8726716_1280.jpg",
-      status: true
-    },
-    {
-      id: 4,
-      name: "Sara Khan",
-      email: "sara.khan@example.com",
-      contact: "+92 333 1122334",
-      address: "Rawalpindi, Pakistan",
-      image: "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=400&h=400&fit=crop",
-      status: true
-    },
-    {
-      id: 5,
-      name: "Usman Tariq",
-      email: "usman.tariq@example.com",
-      contact: "+92 306 9988776",
-      address: "Faisalabad, Pakistan",
-      image: "https://cdn.pixabay.com/photo/2024/05/09/13/35/ai-generated-8751040_640.png",
-      status: false
-    },
-    {
-      id: 6,
-      name: "Areeba Shah",
-      email: "areeba.shah@example.com",
-      contact: "+92 300 5552233",
-      address: "Multan, Pakistan",
-      image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&h=400&fit=crop",
-      status: true
-    },
-    {
-      id: 7,
-      name: "Zohaib Jamil",
-      email: "zohaib.jamil@example.com",
-      contact: "+92 307 3344556",
-      address: "Quetta, Pakistan",
-      image: "https://images.unsplash.com/photo-1434056886845-dac89ffe9b56?w=400&h=400&fit=crop",
-      status: true
-    },
-    {
-      id: 8,
-      name: "Hina Gul",
-      email: "hina.gul@example.com",
-      contact: "+92 336 6677889",
-      address: "Peshawar, Pakistan",
-      image: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&h=400&fit=crop",
-      status: false
-    }
-  ];
+  // const dummyData = [
+  //   {
+  //     id: 1,
+  //     name: "Rayan Ahmed",
+  //     email: "rayan.ahmed@example.com",
+  //     contact: "+92 300 1234567",
+  //     address: "Lahore, Pakistan",
+  //     image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&h=400&fit=crop",
+  //     status: true
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "Mehak Ali",
+  //     email: "mehak.ali@example.com",
+  //     contact: "+92 345 7654321",
+  //     address: "Karachi, Pakistan",
+  //     image: "https://cdn.pixabay.com/photo/2022/02/11/09/21/leather-wallet-7006894_640.jpg",
+  //     status: false
+  //   },
+  //   {
+  //     id: 3,
+  //     name: "Talha Bashir",
+  //     email: "talha.bashir@example.com",
+  //     contact: "+92 321 5566778",
+  //     address: "Islamabad, Pakistan",
+  //     image: "https://cdn.pixabay.com/photo/2024/04/29/04/21/tshirt-8726716_1280.jpg",
+  //     status: true
+  //   },
+  //   {
+  //     id: 4,
+  //     name: "Sara Khan",
+  //     email: "sara.khan@example.com",
+  //     contact: "+92 333 1122334",
+  //     address: "Rawalpindi, Pakistan",
+  //     image: "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=400&h=400&fit=crop",
+  //     status: true
+  //   },
+  //   {
+  //     id: 5,
+  //     name: "Usman Tariq",
+  //     email: "usman.tariq@example.com",
+  //     contact: "+92 306 9988776",
+  //     address: "Faisalabad, Pakistan",
+  //     image: "https://cdn.pixabay.com/photo/2024/05/09/13/35/ai-generated-8751040_640.png",
+  //     status: false
+  //   },
+  //   {
+  //     id: 6,
+  //     name: "Areeba Shah",
+  //     email: "areeba.shah@example.com",
+  //     contact: "+92 300 5552233",
+  //     address: "Multan, Pakistan",
+  //     image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&h=400&fit=crop",
+  //     status: true
+  //   },
+  //   {
+  //     id: 7,
+  //     name: "Zohaib Jamil",
+  //     email: "zohaib.jamil@example.com",
+  //     contact: "+92 307 3344556",
+  //     address: "Quetta, Pakistan",
+  //     image: "https://images.unsplash.com/photo-1434056886845-dac89ffe9b56?w=400&h=400&fit=crop",
+  //     status: true
+  //   },
+  //   {
+  //     id: 8,
+  //     name: "Hina Gul",
+  //     email: "hina.gul@example.com",
+  //     contact: "+92 336 6677889",
+  //     address: "Peshawar, Pakistan",
+  //     image: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&h=400&fit=crop",
+  //     status: false
+  //   }
+  // ];
 
-  const toggleStatus = (id) => {
 
-  };
+  const [users, setUsers] = useState([]);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      const token = getToken();
+
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/users/all`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        setUsers(response.data);
+        
+      } catch (err) {
+        console.error("Error fetching users:", err);
+        setError(err.response?.data?.message || "Unauthorized or server error");
+      }
+    };
+
+    fetchUsers();
+  }, []);
+
+
+
+  
+const toggleStatus = async (userId) => {
+  
+  try {
+    const token = getToken();
+
+    
+    const updatedStatus = users.find(u => u._id === userId)?.status === "active"
+      ? "blocked"
+      : "active";
+
+    const response = await axios.put(
+     `${import.meta.env.VITE_BACKEND_URL}/users/${userId}`,
+      { status: updatedStatus },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    // show changes in frontend
+
+    const updatedUsers = users.map(user =>
+      user._id === userId ? { ...user, status: updatedStatus } : user
+    );
+    setUsers(updatedUsers);
+
+    console.log("Status updated successfully:", response.data.message);
+  } catch (error) {
+    console.error("Error updating status:", error.response?.data?.message || error.message);
+  }
+};
+
 
 
   //**************************** */ Search filter **************************** */
-  const filteredData = dummyData.filter((item) =>
+  const filteredData = users.filter((item) =>
     item.name.toLowerCase().includes(search.toLowerCase())
   );
 
@@ -157,17 +219,17 @@ const Customers = () => {
                     className="w-14 h-14 sm:w-20 sm:h-20 rounded object-cover transition-all"
                   />
                 </td> */}
-                <td className="py-2 px-2 sm:px-4 border-b text-xs sm:text-base">{item.name}</td>
-                <td className="py-2 px-2 sm:px-4 border-b text-xs sm:text-base">{item.email}</td>
-                <td className="py-2 px-2 sm:px-4 border-b text-xs sm:text-base">{item.contact}</td>
-                <td className="py-2 px-2 sm:px-4 border-b text-xs sm:text-base">{item.address}</td>
+                <td className="py-2 px-2 sm:px-4 border-b text-xs sm:text-base">{item.name|| "-"}</td>
+                <td className="py-2 px-2 sm:px-4 border-b text-xs sm:text-base">{item.email|| "-"}</td>
+                <td className="py-2 px-2 sm:px-4 border-b text-xs sm:text-base">{item.contact|| "-"}</td>
+                <td className="py-2 px-2 sm:px-4 border-b text-xs sm:text-base">{item.address || "-"}</td>
                 <td className="py-2 px-4 border-b">
                   <button
-                    onClick={() => toggleStatus(item.id)}
-                    className={`px-3 py-1 rounded-full text-white text-xs sm:text-sm transition ${item.status ? "bg-green-500" : "bg-red-500"
+                    onClick={() => toggleStatus(item._id)}
+                    className={`px-3 py-1 rounded-full text-white text-xs sm:text-sm transition ${item.status === "active" ? "bg-green-500" : "bg-red-500"
                       }`}
                   >
-                    {item.status ? "Active" : "Inactive"}
+                    {item.status === "active" ? "active" : "blocked"}
                   </button>
                 </td>
 

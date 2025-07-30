@@ -21,6 +21,18 @@ export const middlewareToProtect = async (req, res, next) => {
 
 
 
+export const authorize = (role) => {
+  return (req, res, next) => {
+    if (req.user.role !== role) {
+      return res.status(403).json({
+        success: false,
+        message: `Access denied. Only ${role}s are allowed.`
+      });
+    }
+    next();
+  };
+};
+
 
 /////// index.js ------- base
 ////// models ---- user

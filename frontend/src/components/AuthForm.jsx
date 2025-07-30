@@ -36,7 +36,7 @@ const AuthForm = () => {
       const { data } = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/signup`, formData)
       if (data.success) {
            toast.success(data.message);
-        console.log("signup data >>>>>>>>>>>>>>>>> ", data);
+        // console.log("signup data >>>>>>>>>>>>>>>>> ", data);
         setToken(data.token);
         setUser(data.user)
         /// reset form

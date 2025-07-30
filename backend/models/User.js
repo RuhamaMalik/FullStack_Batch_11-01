@@ -21,11 +21,19 @@ const userSchema = mongoose.Schema({
   contact: {
     type: String,
   },
+  address: {
+    type: String,
+  },
   role: {
     type: String,
     enum: ["user", "admin"],
     default: "user"
-  }
+  },
+   status: {
+      type: String,
+      enum: ["active", "blocked"],
+      default: "active"
+    },
 }, {
   timestamps: true
 }) 
