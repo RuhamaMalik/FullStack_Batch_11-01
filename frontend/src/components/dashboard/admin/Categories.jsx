@@ -1,101 +1,109 @@
-
-
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { MdDelete, MdEdit } from "react-icons/md";
+import CategoryDrawer from "../../drawer/CategoryDrawer";
+import DeleteModal from "./modal/DeleteModal";
+import Pagination from "../../Pagination";
+import { getToken } from "../../../utils/auth";
+
 
 const Categories = () => {
+  let [openDrawer, setOpenDrawer] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [categories, setCategories] = useState([]);
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 4;
+  const token = getToken();
 
-  //**************************** */ Dummy data for products**************************** */
-  const dummyData = [
-    {
-      id: 1,
-      name: "Garmin Watch 2024",
-      product_count: "$100",
-      category: "Watches",
-      image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&h=400&fit=crop",
-      status: true
-    },
-    {
-      id: 2,
-      name: "Ana Wallet On A String",
-      product_count: "$39.99",
-      category: "Accessories",
-      image: "https://cdn.pixabay.com/photo/2022/02/11/09/21/leather-wallet-7006894_640.jpg",
-      status: false
-    },
-    {
-      id: 3,
-      product_count: "$40",
-      category: "Clothing",
-      image: "https://cdn.pixabay.com/photo/2024/04/29/04/21/tshirt-8726716_1280.jpg",
-      status: true
-    },
-    {
-      id: 4,
-      product_count: "$99.99",
-      category: "Watches",
-      image: "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=400&h=400&fit=crop",
-      status: false
-    },
-    {
-      id: 5,
-      product_count: "$84",
-      category: "Clothing",
-      image: "https://cdn.pixabay.com/photo/2024/05/09/13/35/ai-generated-8751040_640.png",
-      status: true
-    },
-    {
-      id: 6,
-      product_count: "$40",
-      category: "Bags",
-      image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&h=400&fit=crop",
-      status: false
-    },
-    {
-      id: 7,
-      product_count: "$34.99",
-      category: "Watches",
-      image: "https://images.unsplash.com/photo-1434056886845-dac89ffe9b56?w=400&h=400&fit=crop",
-      status: true
-    },
-    {
-      id: 8,
-      product_count: "$75",
-      category: "Electronics",
-      image: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&h=400&fit=crop",
-      status: false
+  //**************************** */ delete category**************************** */
+
+  const handleDeleteModalOpen = (category) => {
+
+    setSelectedCategory(category);
+    setIsModalOpen(true);
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/categories/${id}`,
+        { headers: {
+          Authorization: `Bearer ${token}`,
+        }});
+
+      setCategories(categories.filter((category) => category._id !== id))
+      setIsModalOpen(false);
+    } catch (error) {
+      console.error("Delete failed:", error);
     }
-  ];
+  };
+
+  //**************************** */ get categories**************************** */
 
 
-  
-const toggleStatus = (id) => {
+  const fetchCategories = async () => {
+    try {
+      const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/categories`
+      );
+      setCategories(response.data.categories);
+    } catch (error) {
+      console.error("Failed to fetch categories:", error);
+    }
+  };
 
-};
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
+  //**************************** */ update status **************************** */
+
+
+  const toggleStatus =async(id) => {
+ try {
+    const token = getToken();
+    
+    const updatedStatus = categories.find(c => c._id === id)?.isActive 
+      ? false
+      :true;
+
+    const response = await axios.patch(
+     `${import.meta.env.VITE_BACKEND_URL}/categories/${id}`,
+      { isActive: updatedStatus },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    // show changes in frontend
+
+    const updatedCategories = categories.map(category =>
+      category._id === id ? { ...category, isActive: updatedStatus } : category
+    );
+    setCategories(updatedCategories);
+
+    console.log("Status updated successfully:", response.data.message);
+  } catch (error) {
+    console.error("Error updating status:", error.response?.data?.message || error.message);
+  }
+  };
+
+    //**************************** */ update category **************************** */
+
 
   //**************************** */ Search filter **************************** */
-  const filteredData = dummyData.filter((item) =>
-    item.category.toLowerCase().includes(search.toLowerCase())
+  const filteredData = categories?.filter((item) =>
+    item.name.toLowerCase().includes(search.toLowerCase())
   );
 
 
-  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const paginatedData = filteredData.slice(startIndex, startIndex + itemsPerPage);
 
   //**************************** */ Pagination logic for 4-page**************************** */
-  const pageLimit = 4;
-  const getPageNumbers = () => {
-    const pages = [];
-    const start = Math.floor((currentPage - 1) / pageLimit) * pageLimit + 1;
-    for (let i = start; i < start + pageLimit && i <= totalPages; i++) {
-      pages.push(i);
-    }
-    return pages;
-  };
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const paginatedData = filteredData.slice(startIndex, startIndex + itemsPerPage);
 
   return (
     <div className="p-4 sm:p-6 max-w-full w-full mx-0">
@@ -113,10 +121,20 @@ const toggleStatus = (id) => {
           }}
           className="border border-gray-300 rounded px-4 py-2 w-full sm:max-w-sm"
         />
-        <button className="bg-red-600 text-white px-4 py-2 rounded w-full sm:w-auto hover:bg-red-700 transition-all">
+        <button onClick={() => setOpenDrawer(true)} className="bg-red-600 text-white px-4 py-2 rounded w-full sm:w-auto hover:bg-red-700 transition-all">
           Add Category
         </button>
       </div>
+
+      {/* drawer */}
+      <CategoryDrawer
+        isOpen={openDrawer}
+        onClose={() =>{ setOpenDrawer(false); setSelectedCategory(null);setIsEditing(false)}}
+        categories={categories}
+        setCategories={setCategories}
+        isEditing={isEditing}
+        initialData={selectedCategory} />
+
 
       {/*****************************  Responsive Table **************************** */}
       <div className="overflow-x-auto border rounded-md">
@@ -125,6 +143,7 @@ const toggleStatus = (id) => {
             <tr>
               <th className="py-2 px-2 sm:px-4 border-b">Image</th>
               <th className="py-2 px-2 sm:px-4 border-b">Category</th>
+              <th className="py-2 px-2 sm:px-4 border-b">Description</th>
               <th className="py-2 px-2 sm:px-4 border-b">product_count</th>
               <th className="py-2 px-2 sm:px-4 border-b">Status</th>
               <th className="py-2 px-2 sm:px-4 border-b">Actions</th>
@@ -135,28 +154,29 @@ const toggleStatus = (id) => {
               <tr key={item.id} className="hover:bg-red-50 transition">
                 <td className="py-2 px-2 sm:px-4 border-b">
                   <img
-                    src={item.image}
+                    src={import.meta.env.VITE_BACKEND_UPLOAD_URL + item.image}
                     alt="product"
                     className="w-14 h-14 sm:w-20 sm:h-20 rounded object-cover transition-all"
                   />
                 </td>
-                <td className="py-2 px-2 sm:px-4 border-b text-xs sm:text-base">{item.category}</td>
-                <td className="py-2 px-2 sm:px-4 border-b text-xs sm:text-base">{item.product_count}</td>
+                <td className="py-2 px-2 sm:px-4 border-b text-xs sm:text-base">{item.name}</td>
+                <td className="py-2 px-2 sm:px-4 border-b text-xs sm:text-base">{item.description}</td>
+                <td className="py-2 px-2 sm:px-4 border-b text-xs sm:text-base">{item.productCount}</td>
                 <td className="py-2 px-4 border-b">
-                    <button
-                      onClick={() => toggleStatus(item.id)}
-                      className={`px-3 py-1 rounded-full text-white text-xs sm:text-sm transition ${item.status ? "bg-green-500" : "bg-red-500"
-                        }`}
-                    >
-                      {item.status ? "Active" : "Inactive"}
-                    </button>
+                  <button
+                    onClick={() => toggleStatus(item._id)}
+                    className={`px-3 py-1 rounded-full text-white text-xs sm:text-sm transition ${item.isActive ? "bg-green-500" : "bg-red-500"
+                      }`}
+                  >
+                    {item.isActive ? "Active" : "Inactive"}
+                  </button>
                 </td>
 
                 <td className="py-2 px-2 sm:px-4 border-b text-xs sm:text-base">
                   <div className="flex gap-2">
                     {/* Update button */}
                     <button
-                      onClick={() => handleEdit(rowData)}
+                      onClick={() =>{ setIsEditing(true); setSelectedCategory(item); setOpenDrawer(true); }}
                       className="text-blue-500 hover:text-blue-700 transition"
                     >
                       <MdEdit size={18} />
@@ -164,7 +184,7 @@ const toggleStatus = (id) => {
 
                     {/* Delete button */}
                     <button
-                      onClick={() => handleDelete(rowData._id)}
+                      onClick={() => handleDeleteModalOpen(item)}
                       className="text-red-500 hover:text-red-700 transition"
                     >
                       <MdDelete size={18} />
@@ -178,39 +198,24 @@ const toggleStatus = (id) => {
         </table>
       </div>
 
+      {/* Modal Call */}
+      <DeleteModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onDelete={handleDelete}
+        data={selectedCategory}
+        title={"Category"}
+      />
+
       {/*****************************  Pagination **************************** */}
-      <div className="flex justify-center items-center gap-2 mt-6 flex-wrap">
-        {currentPage > 1 && (
-          <button
-            onClick={() => setCurrentPage((prev) => prev - 1)}
-            className="px-3 py-1 border rounded hover:bg-red-100 text-red-600"
-          >
-            &lt;
-          </button>
-        )}
 
-        {getPageNumbers().map((page) => (
-          <button
-            key={page}
-            onClick={() => setCurrentPage(page)}
-            className={`px-3 py-1 border rounded ${currentPage === page
-              ? "bg-red-600 text-white"
-              : "hover:bg-red-100 text-red-600"
-              }`}
-          >
-            {page}
-          </button>
-        ))}
+      <Pagination
+        totalItems={filteredData.length}
+        itemsPerPage={itemsPerPage}
+        onPageChange={(page) => setCurrentPage(page)}
+        uniqueKey="mypage-pagination"
+      />
 
-        {currentPage < totalPages && (
-          <button
-            onClick={() => setCurrentPage((prev) => prev + 1)}
-            className="px-3 py-1 border rounded hover:bg-red-100 text-red-600"
-          >
-            &gt;
-          </button>
-        )}
-      </div>
     </div>
   );
 };
