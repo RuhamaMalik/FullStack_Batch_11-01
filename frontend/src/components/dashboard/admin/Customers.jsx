@@ -257,13 +257,7 @@ const handleDelete = async (userId) => {
 
                 <td className="py-2 px-2 sm:px-4 border-b text-xs sm:text-base">
                   <div className="flex gap-2">
-                    {/* Update button */}
-                    <button
-                      onClick={() => handleEdit(rowData)}
-                      className="text-blue-500 hover:text-blue-700 transition"
-                    >
-                      <MdEdit size={18} />
-                    </button>
+                  
 
                     {/* Delete button */}
                     <button

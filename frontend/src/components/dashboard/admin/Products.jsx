@@ -1,6 +1,7 @@
 
 
 import React, { useState } from "react";
+import { MdDelete, MdEdit } from "react-icons/md";
 
 const Products = () => {
   const [search, setSearch] = useState("");
@@ -118,6 +119,8 @@ const Products = () => {
               <th className="py-2 px-2 sm:px-4 border-b">Name</th>
               <th className="py-2 px-2 sm:px-4 border-b">Category</th>
               <th className="py-2 px-2 sm:px-4 border-b">Price</th>
+                            <th className="py-2 px-2 sm:px-4 border-b">Actions</th>
+
             </tr>
           </thead>
           <tbody>
@@ -133,6 +136,25 @@ const Products = () => {
                 <td className="py-2 px-2 sm:px-4 border-b text-xs sm:text-base">{item.name}</td>
                 <td className="py-2 px-2 sm:px-4 border-b text-xs sm:text-base">{item.category}</td>
                 <td className="py-2 px-2 sm:px-4 border-b text-xs sm:text-base">{item.price}</td>
+                 <td className="py-2 px-2 sm:px-4 border-b text-xs sm:text-base">
+                                  <div className="flex gap-2">
+                                    {/* Update button */}
+                                    <button
+                                      // onClick={() => handleEdit(rowData)}
+                                      className="text-blue-500 hover:text-blue-700 transition"
+                                    >
+                                      <MdEdit size={18} />
+                                    </button>
+                
+                                    {/* Delete button */}
+                                    <button
+                                      // onClick={() => handleDelete(item._id)}
+                                      className="text-red-500 hover:text-red-700 transition"
+                                    >
+                                      <MdDelete size={18} />
+                                    </button>
+                                  </div>
+                                </td>
               </tr>
             ))}
           </tbody>
