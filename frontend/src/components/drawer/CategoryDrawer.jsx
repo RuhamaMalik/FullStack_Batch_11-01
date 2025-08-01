@@ -36,6 +36,7 @@ const CategoryDrawer = ({
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
+               
         if (file) {
             setImageFile(file);
             const imageURL = URL.createObjectURL(file);
@@ -54,7 +55,12 @@ const CategoryDrawer = ({
         const formData = new FormData();
         formData.append("name", title);
         formData.append("description", description);
-        if (imageFile) formData.append("image", imageFile);
+        if (imageFile) {formData.append("image", imageFile)}
+        
+        if (!imageFile && !isEditing){
+            alert("Image is required!");
+            return;
+        }
 
         try {
             if (isEditing) {

@@ -9,7 +9,7 @@ import path from "path";
 export const createCategory = async (req, res) => {
   try {
     const { name, description } = req.body;
-    console.log(name, description);
+    // console.log(name, description);
     
     const slug = slugify(name, { lower: true });
 

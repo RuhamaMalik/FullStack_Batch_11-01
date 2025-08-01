@@ -14,9 +14,9 @@ const router = express.Router();
 
 router.post("/", middlewareToProtect, authorize("admin"), upload.single("image"), createCategory);
 
-router.delete("/:id", middlewareToProtect, authorize("admin"), deleteCategory);
-
 router.put("/:id",middlewareToProtect, authorize("admin"),  upload.single("image"), updateCategory);
+
+router.delete("/:id", middlewareToProtect, authorize("admin"), deleteCategory);
 
 router.patch("/:id",middlewareToProtect, authorize("admin"),  updateCategoryStatus);
 
