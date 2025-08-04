@@ -1,93 +1,132 @@
 
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MdDelete, MdEdit } from "react-icons/md";
+import Pagination from "../../Pagination";
+import { getToken } from "../../../utils/auth";
+import ProductDrawer from "../../drawer/ProductDrawer";
+import axios from "axios";
+import DeleteModal from "./modal/DeleteModal";
 
 const Products = () => {
+  let [openDrawer, setOpenDrawer] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [categories, setCategories] = useState([]);
+  const [products, setProducts] = useState([]);
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 4;
+  const token = getToken();
 
-  //**************************** */ Dummy data for products**************************** */
-  const dummyData = [
-    {
-      id: 1,
-      name: "Garmin Watch 2024",
-      price: "$100",
-      category: "Watches",
-      image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&h=400&fit=crop"
-    },
-    {
-      id: 2,
-      name: "Ana Wallet On A String",
-      price: "$39.99",
-      category: "Accessories",
-      image: "https://cdn.pixabay.com/photo/2022/02/11/09/21/leather-wallet-7006894_640.jpg"
-    },
-    {
-      id: 3,
-      name: "Aspiration T-shirt",
-      price: "$40",
-      category: "Clothing",
-      image: "https://cdn.pixabay.com/photo/2024/04/29/04/21/tshirt-8726716_1280.jpg"
-    },
-    {
-      id: 4,
-      name: "Cora Cog All Black",
-      price: "$99.99",
-      category: "Watches",
-      image: "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=400&h=400&fit=crop"
-    },
-    {
-      id: 5,
-      name: "Women T-shirt",
-      price: "$84",
-      category: "Clothing",
-      image: "https://cdn.pixabay.com/photo/2024/05/09/13/35/ai-generated-8751040_640.png"
-    },
-    {
-      id: 6,
-      name: "Travel Bag",
-      price: "$40",
-      category: "Bags",
-      image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&h=400&fit=crop"
-    },
-    {
-      id: 7,
-      name: "V Watch",
-      price: "$34.99",
-      category: "Watches",
-      image: "https://images.unsplash.com/photo-1434056886845-dac89ffe9b56?w=400&h=400&fit=crop"
-    },
-    {
-      id: 8,
-      name: "HP Laptop",
-      price: "$75",
-      category: "Electronics",
-      image: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&h=400&fit=crop"
+
+  //**************************** */ get categories**************************** */
+
+
+  const fetchCategories = async () => {
+    try {
+      const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/categories`
+      );
+      setCategories(response.data.categories);
+    } catch (error) {
+      console.error("Failed to fetch categories:", error);
     }
-  ];
- 
+  };
+
+
+
+  //**************************** */ get products**************************** */
+
+
+  const fetchProducts = async () => {
+    try {
+      const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/products`
+      );
+      setProducts(response.data.products);
+    } catch (error) {
+      console.error("Failed to fetch products:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchCategories();
+    fetchProducts();
+  }, []);
+
+
+  //**************************** */ update status **************************** */
+
+
+  const toggleStatus = async (id) => {
+    try {
+      const token = getToken();
+
+      const updatedStatus = products.find(p => p._id === id)?.isActive
+        ? false
+        : true;
+
+      const response = await axios.patch(
+        `${import.meta.env.VITE_BACKEND_URL}/products/${id}`,
+        { isActive: updatedStatus },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      // show changes in frontend
+
+      const updatedProducts = products.map(product =>
+        product._id === id ? { ...product, isActive: updatedStatus } : product
+      );
+      setProducts(updatedProducts);
+
+      console.log("Status updated successfully:", response.data.message);
+    } catch (error) {
+      console.error("Error updating status:", error.response?.data?.message || error.message);
+    }
+  };
+
+
+  //**************************** */ Delete  **************************** */
+
+  const handleDeleteModalOpen = (product) => {
+
+    setSelectedProduct(product);
+    setIsModalOpen(true);
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/products/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      setProducts(products.filter((product) => product._id !== id));
+      setIsModalOpen(false);
+      alert("Product deleted successfully");
+    } catch (error) {
+      console.error("Delete failed:", error);
+      alert("Failed to delete product");
+    }
+  };
+
+
   //**************************** */ Search filter **************************** */
-  const filteredData = dummyData.filter((item) =>
-    item.name.toLowerCase().includes(search.toLowerCase())
+  const filteredData = products.filter((item) =>
+    item.name.toLowerCase().includes(search.toLowerCase()) ||
+    item.category.name.toLowerCase().includes(search.toLowerCase())
   );
 
 
-  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+  //**************************** */ Pagination logic for 4-page**************************** */
   const startIndex = (currentPage - 1) * itemsPerPage;
   const paginatedData = filteredData.slice(startIndex, startIndex + itemsPerPage);
 
-  //**************************** */ Pagination logic for 4-page**************************** */
-  const pageLimit = 4;
-  const getPageNumbers = () => {
-    const pages = [];
-    const start = Math.floor((currentPage - 1) / pageLimit) * pageLimit + 1;
-    for (let i = start; i < start + pageLimit && i <= totalPages; i++) {
-      pages.push(i);
-    }
-    return pages;
-  };
 
   return (
     <div className="p-4 sm:p-6 max-w-full w-full mx-0">
@@ -105,10 +144,22 @@ const Products = () => {
           }}
           className="border border-gray-300 rounded px-4 py-2 w-full sm:max-w-sm"
         />
-        <button className="bg-red-600 text-white px-4 py-2 rounded w-full sm:w-auto hover:bg-red-700 transition-all">
-          Add Category
+        <button onClick={() => setOpenDrawer(true)} className="bg-red-600 text-white px-4 py-2 rounded w-full sm:w-auto hover:bg-red-700 transition-all">
+          Add Product
         </button>
       </div>
+
+      {/* drawer */}
+      <ProductDrawer
+        isOpen={openDrawer}
+        onClose={() => { setOpenDrawer(false); setSelectedProduct(null); setIsEditing(false) }}
+        categories={categories}
+        products={products}
+        setProducts={setProducts}
+        isEditing={isEditing}
+        initialData={selectedProduct} />
+
+
 
       {/*****************************  Responsive Table **************************** */}
       <div className="overflow-x-auto border rounded-md">
@@ -117,9 +168,12 @@ const Products = () => {
             <tr>
               <th className="py-2 px-2 sm:px-4 border-b">Image</th>
               <th className="py-2 px-2 sm:px-4 border-b">Name</th>
-              <th className="py-2 px-2 sm:px-4 border-b">Category</th>
               <th className="py-2 px-2 sm:px-4 border-b">Price</th>
-                            <th className="py-2 px-2 sm:px-4 border-b">Actions</th>
+              <th className="py-2 px-2 sm:px-4 border-b">Description</th>
+              <th className="py-2 px-2 sm:px-4 border-b">Category</th>
+              <th className="py-2 px-2 sm:px-4 border-b">Stock</th>
+              <th className="py-2 px-2 sm:px-4 border-b">Status</th>
+              <th className="py-2 px-2 sm:px-4 border-b">Actions</th>
 
             </tr>
           </thead>
@@ -128,73 +182,69 @@ const Products = () => {
               <tr key={item.id} className="hover:bg-red-50 transition">
                 <td className="py-2 px-2 sm:px-4 border-b">
                   <img
-                    src={item.image}
+                    // src={import.meta.env.VITE_BACKEND_UPLOAD_URL + item.images[0]}
+                    src={item.images[0].url}
                     alt="product"
                     className="w-14 h-14 sm:w-20 sm:h-20 rounded object-cover transition-all"
                   />
                 </td>
                 <td className="py-2 px-2 sm:px-4 border-b text-xs sm:text-base">{item.name}</td>
-                <td className="py-2 px-2 sm:px-4 border-b text-xs sm:text-base">{item.category}</td>
-                <td className="py-2 px-2 sm:px-4 border-b text-xs sm:text-base">{item.price}</td>
-                 <td className="py-2 px-2 sm:px-4 border-b text-xs sm:text-base">
-                                  <div className="flex gap-2">
-                                    {/* Update button */}
-                                    <button
-                                      // onClick={() => handleEdit(rowData)}
-                                      className="text-blue-500 hover:text-blue-700 transition"
-                                    >
-                                      <MdEdit size={18} />
-                                    </button>
-                
-                                    {/* Delete button */}
-                                    <button
-                                      // onClick={() => handleDelete(item._id)}
-                                      className="text-red-500 hover:text-red-700 transition"
-                                    >
-                                      <MdDelete size={18} />
-                                    </button>
-                                  </div>
-                                </td>
+                <td className="py-2 px-2 sm:px-4 border-b text-xs sm:text-base">${item.price}</td>
+                <td className="py-2 px-2 sm:px-4 border-b text-xs sm:text-base">{item.description || "-"}</td>
+                <td className="py-2 px-2 sm:px-4 border-b text-xs sm:text-base">{item.category.name}</td>
+                <td className="py-2 px-2 sm:px-4 border-b text-xs sm:text-base">{item.stock || "0"}</td>
+                <td className="py-2 px-4 border-b">
+                  <button
+                    onClick={() => toggleStatus(item._id)}
+                    className={`px-3 py-1 rounded-full text-white text-xs sm:text-sm transition ${item.isActive ? "bg-green-500" : "bg-red-500"
+                      }`}
+                  >
+                    {item.isActive ? "Active" : "Inactive"}
+                  </button>
+                </td>
+                <td className="py-2 px-2 sm:px-4 border-b text-xs sm:text-base">
+                  <div className="flex gap-2">
+                    {/* Update button */}
+                    <button
+                      // onClick={() => handleEdit(rowData)}
+                      className="text-blue-500 hover:text-blue-700 transition"
+                    >
+                      <MdEdit size={18} />
+                    </button>
+
+                    {/* Delete button */}
+                    <button
+                      onClick={() => handleDeleteModalOpen(item)}
+                      className="text-red-500 hover:text-red-700 transition"
+                    >
+                      <MdDelete size={18} />
+                    </button>
+                  </div>
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
 
+      {/* Modal Call */}
+
+      <DeleteModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onDelete={handleDelete}
+        data={selectedProduct}
+        title={"Product"}
+      />
+
       {/*****************************  Pagination **************************** */}
-      <div className="flex justify-center items-center gap-2 mt-6 flex-wrap">
-        {currentPage > 1 && (
-          <button
-            onClick={() => setCurrentPage((prev) => prev - 1)}
-            className="px-3 py-1 border rounded hover:bg-red-100 text-red-600"
-          >
-            &lt;
-          </button>
-        )}
 
-        {getPageNumbers().map((page) => (
-          <button
-            key={page}
-            onClick={() => setCurrentPage(page)}
-            className={`px-3 py-1 border rounded ${
-              currentPage === page
-                ? "bg-red-600 text-white"
-                : "hover:bg-red-100 text-red-600"
-            }`}
-          >
-            {page}
-          </button>
-        ))}
-
-        {currentPage < totalPages && (
-          <button
-            onClick={() => setCurrentPage((prev) => prev + 1)}
-            className="px-3 py-1 border rounded hover:bg-red-100 text-red-600"
-          >
-            &gt;
-          </button>
-        )}
-      </div>
+      <Pagination
+        totalItems={filteredData.length}
+        itemsPerPage={itemsPerPage}
+        onPageChange={(page) => setCurrentPage(page)}
+        uniqueKey="product-pagination"
+      />
     </div>
   );
 };

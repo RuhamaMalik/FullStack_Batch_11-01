@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const CategorySchema = new mongoose.Schema(
   {
@@ -15,20 +15,24 @@ const CategorySchema = new mongoose.Schema(
     },
     description: {
       type: String,
-      default: '',
+      default: "",
     },
     image: {
-      type: String, 
-      default: '',
+      type: String,
+      default: "",
     },
-    
+    public_id: {
+      type: String,
+      default: "",
+    },
+
     isActive: {
       type: Boolean,
       default: true,
     },
     productCount: {
       type: Number,
-      default: 0 
+      default: 0,
     },
   },
   {
@@ -36,4 +40,4 @@ const CategorySchema = new mongoose.Schema(
   }
 );
 
-export default mongoose.model('category', CategorySchema);
+export default mongoose.model("category", CategorySchema);

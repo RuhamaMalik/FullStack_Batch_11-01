@@ -16,7 +16,7 @@ const DeleteModal = ({ isOpen, onClose, onDelete, data,title }) => {
 
         {/* title */}
         <h2 className="text-xl font-semibold text-gray-800 mb-2">
-          Delete {title || ""}
+          Delete {title  || ""}
         </h2>
 
         {/* body */}
@@ -24,7 +24,7 @@ const DeleteModal = ({ isOpen, onClose, onDelete, data,title }) => {
           Are you sure you want to delete:
         </p>
         <div className="bg-gray-100 p-3 rounded-md mb-4">
-          <p className="font-semibold py-3">{data.name}</p>
+          <p className="font-semibold py-3">{data.name || data?.title}</p>
           <p className="text-sm text-gray-600 pb-3">{data.description || ""}</p>
         </div>
 

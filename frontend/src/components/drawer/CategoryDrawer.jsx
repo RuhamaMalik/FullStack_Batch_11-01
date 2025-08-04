@@ -23,7 +23,8 @@ const CategoryDrawer = ({
         if (isEditing && initialData) {
             setTitle(initialData.name || "");
             setDescription(initialData.description || "");
-            setSelectedImage(`${import.meta.env.VITE_BACKEND_UPLOAD_URL}/${initialData.image}`);
+            // setSelectedImage(`${import.meta.env.VITE_BACKEND_UPLOAD_URL}/${initialData.image}`);
+            setSelectedImage(`${initialData.image}`);
         } else {
             setTitle("");
             setDescription("");

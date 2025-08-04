@@ -154,8 +154,9 @@ const Categories = () => {
               <tr key={item.id} className="hover:bg-red-50 transition">
                 <td className="py-2 px-2 sm:px-4 border-b">
                   <img
-                    src={import.meta.env.VITE_BACKEND_UPLOAD_URL + item.image}
-                    alt="product"
+                    // src={import.meta.env.VITE_BACKEND_UPLOAD_URL + item.image}
+                    src={item.image}
+                    alt="category"
                     className="w-14 h-14 sm:w-20 sm:h-20 rounded object-cover transition-all"
                   />
                 </td>
