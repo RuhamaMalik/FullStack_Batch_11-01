@@ -191,7 +191,7 @@ const Products = () => {
                 <td className="py-2 px-2 sm:px-4 border-b text-xs sm:text-base">{item.name}</td>
                 <td className="py-2 px-2 sm:px-4 border-b text-xs sm:text-base">${item.price}</td>
                 <td className="py-2 px-2 sm:px-4 border-b text-xs sm:text-base">{item.description || "-"}</td>
-                <td className="py-2 px-2 sm:px-4 border-b text-xs sm:text-base">{item.category.name}</td>
+                <td className="py-2 px-2 sm:px-4 border-b text-xs sm:text-base">{item.category.name }</td>
                 <td className="py-2 px-2 sm:px-4 border-b text-xs sm:text-base">{item.stock || "0"}</td>
                 <td className="py-2 px-4 border-b">
                   <button
