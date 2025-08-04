@@ -1,8 +1,8 @@
 import Product from "../models/Product.js";
 import Category from "../models/Category.js";
 import cloudinary from "../utils/cloudinary.js";
-import fs from "fs";
-import path from "path";
+// import fs from "fs";
+// import path from "path";
 import slugify from "slugify";
 
 // export const createProduct = async (req, res) => {
@@ -49,7 +49,7 @@ import slugify from "slugify";
 ////////////////////// get all products
 
 export const createProduct = async (req, res) => {
-  try {
+  try { 
     const { name, description, price, category, stock } = req.body;
 
     if (!name || !price || !category || !stock) {
@@ -70,11 +70,13 @@ export const createProduct = async (req, res) => {
 
     const uploadedImages = [];
 
+    /////////////// upload images one by one 
+
     for (let file of files) {
       const result = await new Promise((resolve, reject) => {
         const stream = cloudinary.uploader.upload_stream(
           {
-            folder: "products",
+            folder: "dimita-products",
             resource_type: "image",
           },
           (error, result) => {
@@ -90,6 +92,11 @@ export const createProduct = async (req, res) => {
         public_id: result.public_id,
       });
     }
+
+
+
+    /////////////// images uploaded
+
 
     const product = await Product.create({
       name,
