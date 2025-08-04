@@ -1,8 +1,8 @@
 import Category from "../models/Category.js";
 import cloudinary from "../utils/cloudinary.js";
 import slugify from "slugify";
-import fs from "fs";
-import path from "path";
+// import fs from "fs";
+// import path from "path";
 
 
 /////////// create category ////////////
@@ -22,7 +22,7 @@ export const createCategory = async (req, res) => {
     if (req.file) {
       const result = await cloudinary.uploader.upload_stream(
         {
-          folder: "categories", // cloudinary folder name --- optional
+          folder: "dimita-categories", // cloudinary folder name --- optional
           resource_type: "image",
         },
         async (error, result) => {
@@ -49,7 +49,9 @@ export const createCategory = async (req, res) => {
       );
 
       
-      result.end(req.file.buffer);
+      result.end(req.file.buffer);  // trigger
+
+
     } else {
       const category = await Category.create({
         name,
@@ -62,6 +64,8 @@ export const createCategory = async (req, res) => {
         .status(201)
         .json({ message: "Category created without image", category });
     }
+
+
   } catch (err) {
     console.error("Category create error:", err);
     res.status(500).json({ message: "Server error", error: err.message });
@@ -245,7 +249,7 @@ export const updateCategory = async (req, res) => {
       // upload new 
       const uploadStream = cloudinary.uploader.upload_stream(
         {
-          folder: "categories",
+          folder: "dimita-categories",
           resource_type: "image",
         },
         async (error, result) => {
@@ -297,6 +301,7 @@ export const updateCategory = async (req, res) => {
     res.status(500).json({ message: "Server Error", error: err.message });
   }
 };
+
 
 
 
