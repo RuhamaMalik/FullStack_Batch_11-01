@@ -3,6 +3,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { NavLink, useNavigate } from "react-router-dom";
 import { isAuthorized } from "../utils/auth";
+import WishlistIcon from "./WishlistIcon";
 
 
 
@@ -308,6 +309,10 @@ const Navbar = () => {
                 stroke="#000" />
               </svg>
             </div>
+
+             {/* wishlist icon */}
+              <WishlistIcon/>
+
 
             {/* cart icon */}
             <div className="relative">

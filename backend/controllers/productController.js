@@ -76,7 +76,7 @@ export const createProduct = async (req, res) => {
       const result = await new Promise((resolve, reject) => {
         const stream = cloudinary.uploader.upload_stream(
           {
-            folder: "dimita-products",
+            folder: "products",
             resource_type: "image",
           },
           (error, result) => {

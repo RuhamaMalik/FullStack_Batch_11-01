@@ -7,7 +7,7 @@ import Orders from '../components/dashboard/admin/Orders';
 import Analytics from '../components/dashboard/admin/Analytics';
 import Messages from '../components/dashboard/admin/Messages';
 import Customers from '../components/dashboard/admin/Customers';
-import Products from '../components/dashboard/admin/Products';
+import AdminProducts from '../components/dashboard/admin/Products';
 import Categories from '../components/dashboard/admin/Categories';
 import Setting from '../components/dashboard/admin/Setting';
 import AuthForm from '../components/AuthForm';
@@ -27,6 +27,10 @@ import Dashboard from '../components/dashboard/admin/Dashboard';
 
 
 
+import ForgotPswd from '../pages/ForgotPswd';
+import ResetPaswd from '../pages/ResetPaswd';
+import Wishlist from '../pages/Wishlist';
+import Products from '../pages/Products';
 
 const router = createBrowserRouter([
     {
@@ -38,6 +42,20 @@ const router = createBrowserRouter([
                 element: (
                     <Home />
                 ),
+            },
+
+                 {
+                path: 'wishlist',
+                element:( 
+                <Wishlist />
+            ),
+            },
+
+ {
+                path: 'products',
+                element:( 
+                <Products/>
+            ),
             },
 
             {
@@ -120,7 +138,7 @@ const router = createBrowserRouter([
         ],
     },
 
-
+    
     ////////// ADMIN 
 
     {
@@ -157,7 +175,7 @@ const router = createBrowserRouter([
             {
                 path: 'products',
                 element: (
-                    <Products />
+                    <AdminProducts />
                 ),
             },
             {
