@@ -22,7 +22,7 @@ export const createCategory = async (req, res) => {
     if (req.file) {
       const result = await cloudinary.uploader.upload_stream(
         {
-          folder: "categories", // cloudinary folder name --- optional
+          folder: "dimita-categories", // cloudinary folder name --- optional
           resource_type: "image",
         },
         async (error, result) => {
@@ -249,7 +249,7 @@ export const updateCategory = async (req, res) => {
       // upload new 
       const uploadStream = cloudinary.uploader.upload_stream(
         {
-          folder: "categories",
+          folder: "dimita-categories",
           resource_type: "image",
         },
         async (error, result) => {

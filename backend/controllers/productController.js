@@ -49,7 +49,7 @@ import slugify from "slugify";
 ////////////////////// get all products
 
 export const createProduct = async (req, res) => {
-  try { 
+  try {
     const { name, description, price, category, stock } = req.body;
 
     if (!name || !price || !category || !stock) {
@@ -70,13 +70,13 @@ export const createProduct = async (req, res) => {
 
     const uploadedImages = [];
 
-    /////////////// upload images one by one 
+    /////////////// upload images one by one
 
     for (let file of files) {
       const result = await new Promise((resolve, reject) => {
         const stream = cloudinary.uploader.upload_stream(
           {
-            folder: "products",
+            folder: "dimita-products",
             resource_type: "image",
           },
           (error, result) => {
@@ -93,10 +93,7 @@ export const createProduct = async (req, res) => {
       });
     }
 
-
-
     /////////////// images uploaded
-
 
     const product = await Product.create({
       name,
@@ -107,6 +104,8 @@ export const createProduct = async (req, res) => {
       slug: slugify(name, { lower: true }),
       images: uploadedImages,
     });
+
+    await product.populate("category", "name image");
 
     await Category.findByIdAndUpdate(category, {
       $inc: { productCount: 1 },
@@ -182,7 +181,6 @@ export const updateProductStatus = async (req, res) => {
 //       });
 //     }
 
-   
 //     await Product.findByIdAndDelete(id);
 
 //     //  decrease productCount
@@ -200,8 +198,6 @@ export const updateProductStatus = async (req, res) => {
 //       .json({ success: false, message: "Failed to delete product" });
 //   }
 // };
-
-
 
 export const deleteProduct = async (req, res) => {
   try {
@@ -230,7 +226,7 @@ export const deleteProduct = async (req, res) => {
     // delete product
     await Product.findByIdAndDelete(id);
 
-    // decrease productCount 
+    // decrease productCount
     if (product.category) {
       await Category.findByIdAndUpdate(product.category, {
         $inc: { productCount: -1 },
@@ -247,5 +243,105 @@ export const deleteProduct = async (req, res) => {
       success: false,
       message: "Failed to delete product",
     });
+  }
+};
+
+//////////////////////////////////////////
+
+export const updateProduct = async (req, res) => {
+  try {
+    const productId = req.params.id;
+    const { name, description, price, stock, category } = req.body;
+
+    const product = await Product.findById(productId);
+    if (!product) return res.status(404).json({ message: "Product not found" });
+
+    const existingProduct = await Product.findById(productId);
+    if (!existingProduct) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    //   category
+    if (category && category !== existingProduct.category.toString()) {
+      await Category.findByIdAndUpdate(existingProduct.category, {
+        $inc: { productCount: -1 },
+      });
+
+      await Category.findByIdAndUpdate(category, {
+        $inc: { productCount: 1 },
+      });
+    }
+
+    //  deleted images
+    const deletedImagePublicIds = req.body.deletedImages
+      ? Array.isArray(req.body.deletedImages)
+        ? req.body.deletedImages
+        : [req.body.deletedImages]
+      : [];
+
+    console.log("Deleted public IDs:", deletedImagePublicIds);
+
+    if (deletedImagePublicIds.length > 0) {
+      // cloudinary delete
+      for (const publicId of deletedImagePublicIds) {
+        await cloudinary.uploader.destroy(publicId);
+      }
+
+      // db images remove
+      product.images = product.images.filter(
+        (img) => !deletedImagePublicIds.includes(img.public_id)
+      );
+    }
+
+    //image updates
+    const existingImages = req.body.existingImages
+      ? Array.isArray(req.body.existingImages)
+        ? req.body.existingImages.map((img) => JSON.parse(img))
+        : [JSON.parse(req.body.existingImages)]
+      : [];
+
+    const newImages = [];
+    if (req.files && req.files.length > 0) {
+      for (let file of req.files) {
+        const result = await new Promise((resolve, reject) => {
+          const stream = cloudinary.uploader.upload_stream(
+            {
+              folder: "dimita-products",
+              resource_type: "image",
+            },
+            (error, result) => {
+              if (error) return reject(error);
+              resolve(result);
+            }
+          );
+          stream.end(file.buffer);
+        });
+        newImages.push({
+          url: result.secure_url,
+          public_id: result.public_id,
+        });
+      }
+    }
+    // final
+    if (existingImages.length > 0 || newImages.length > 0) {
+      product.images = [...existingImages, ...newImages];
+    }
+
+  
+
+    product.name = name || product.name;
+    product.slug = name ? slugify(name, { lower: true }) : product.slug;
+    product.description = description || product.description;
+    product.price = price || product.price;
+    product.stock = stock || product.stock;
+    product.category = category || product.category;
+
+    let savedProduct = await product.save();
+    savedProduct = await savedProduct.populate("category", "name image");
+
+    res.status(200).json({ message: "Product updated", product: savedProduct });
+  } catch (error) {
+    console.error("Update Product Error:", error);
+    res.status(500).json({ message: "Internal Server Error" });
   }
 };

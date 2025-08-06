@@ -183,7 +183,7 @@ const Products = () => {
                 <td className="py-2 px-2 sm:px-4 border-b">
                   <img
                     // src={import.meta.env.VITE_BACKEND_UPLOAD_URL + item.images[0]}
-                    src={item.images[0].url}
+                    src={item?.images[0]?.url || ""}
                     alt="product"
                     className="w-14 h-14 sm:w-20 sm:h-20 rounded object-cover transition-all"
                   />
@@ -206,7 +206,7 @@ const Products = () => {
                   <div className="flex gap-2">
                     {/* Update button */}
                     <button
-                      // onClick={() => handleEdit(rowData)}
+                      onClick={() =>{ setIsEditing(true); setSelectedProduct(item); setOpenDrawer(true); }}
                       className="text-blue-500 hover:text-blue-700 transition"
                     >
                       <MdEdit size={18} />

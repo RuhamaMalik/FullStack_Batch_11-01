@@ -19,23 +19,34 @@ const ProductDrawer = ({
     const [selectedCategory, setSelectedCategory] = useState("");
     const [images, setImages] = useState([]);
     const [imageFiles, setImageFiles] = useState([]);
+    const [deletedImages, setDeletedImages] = useState([]);
+
+
 
     const token = getToken();
 
     /////////////  pre-fill form for editing
 
-    // useEffect(() => {
-    //     if (isEditing && initialData) {
-    //         setTitle(initialData.name || "");
-    //         setDescription(initialData.description || "");
-    //         setSelectedImage(`${import.meta.env.VITE_BACKEND_UPLOAD_URL}/${initialData.image}`);
-    //     } else {
-    //         setTitle("");
-    //         setDescription("");
-    //         setSelectedImage(null);
-    //         setImageFile(null);
-    //     }
-    // }, [isEditing, initialData, isOpen]);
+
+    useEffect(() => {
+        if (isEditing && initialData) {
+            setTitle(initialData.name || "");
+            setDescription(initialData.description || "");
+            setSelectedCategory(initialData.category._id || "")
+            setStock(initialData.stock || null)
+            setPrice(initialData.price || null)
+            setImages(initialData.images || []);
+            setImageFiles([])
+        } else {
+            setTitle("");
+            setDescription("");
+            setSelectedCategory("")
+            setStock(null)
+            setPrice(null)
+            setImages([])
+            setImageFiles([])
+        }
+    }, [isEditing, initialData, isOpen]);
 
 
     // /////////////// images
@@ -52,16 +63,35 @@ const ProductDrawer = ({
             return;
         }
 
-        const newImagePreviews = files.map((file) => URL.createObjectURL(file));
+        const newImagePreviews = files.map((file, i) => ({ url: URL.createObjectURL(file), public_id: i }));
         setImages((prev) => [...prev, ...newImagePreviews]);
         setImageFiles((prev) => [...prev, ...files]);
+    };
+
+
+    const handleRemoveImage = (indexToRemove) => {
+
+
+        const imageToRemove = images[indexToRemove];
+        if (imageToRemove.public_id && typeof imageToRemove.public_id === "string") {
+            setDeletedImages((prev) => [...prev, imageToRemove.public_id]);
+        }
+
+        // remove images and file
+        setImages((prev) => prev.filter((_, i) => i !== indexToRemove));
+        if (imageToRemove.url.startsWith("blob:")) {
+            setImageFiles((prev) => prev.filter((_, i) => i !== indexToRemove));
+        }
+
     };
 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (imageFiles.length < 2) {
+        console.log("Deleted Images being sent:", deletedImages);
+
+        if (!isEditing && imageFiles.length < 2) {
             alert("At least 2 images are required.");
             return;
         }
@@ -80,25 +110,38 @@ const ProductDrawer = ({
 
         try {
             if (isEditing) {
-                //  update category
-                // const response = await axios.put(
-                //     `${import.meta.env.VITE_BACKEND_URL}/categories/${initialData._id}`,
-                //     formData,
-                //     {
-                //         headers: {
-                //             "Content-Type": "multipart/form-data",
-                //             Authorization: `Bearer ${token}`,
-                //         }
 
-                //     });
-                // const updated = response.data.category;
 
-                // setCategories((prev) =>
-                //     prev.map((cat) => (cat._id === updated._id ? updated : cat))
-                // );
-                // alert("Category updated successfully");
+                const existingImages = images.filter(img => typeof img.public_id === "string");
+              
+
+                deletedImages.forEach((publicId) => {
+                    formData.append("deletedImages", publicId);
+                });
+
+                existingImages.forEach((img) => {
+                    formData.append("existingImages", JSON.stringify(img));
+                });
+
+                //  update product
+                const response = await axios.put(
+                    `${import.meta.env.VITE_BACKEND_URL}/products/${initialData._id}`,
+                    formData,
+                    {
+                        headers: {
+                            "Content-Type": "multipart/form-data",
+                            Authorization: `Bearer ${token}`,
+                        }
+                    }
+                );
+
+                const updated = response.data.product;
+                setProducts((prev) =>
+                    prev.map((prod) => (prod._id === updated._id ? updated : prod))
+                );
+                alert("Product updated successfully");
             } else {
-               // create product
+                // create product
                 const response = await axios.post(
                     `${import.meta.env.VITE_BACKEND_URL}/products`,
                     formData,
@@ -111,7 +154,7 @@ const ProductDrawer = ({
                     }
                 );
                 // console.log(response.data.product);
-                
+
                 setProducts([response.data.product, ...products]);
                 alert("Product created successfully");
             }
@@ -162,7 +205,19 @@ const ProductDrawer = ({
                         onClick={handleImageClick}
                     >
                         {images[0] ? (
-                            <img src={images[0]} alt="Main" className="w-full h-full object-cover" />
+                            <div className="relative w-full h-full" >
+                                <img src={images[0].url} alt="Main" className="w-full h-full object-cover" />
+                                <button
+                                    type="button"
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleRemoveImage(0);
+                                    }}
+                                    className="absolute top-0 right-0 bg-black text-white text-xs px-1"
+                                >
+                                    ✖
+                                </button>
+                            </div>
                         ) : (
                             <span className="text-gray-400 text-sm">Click to Upload Images</span>
                         )}
@@ -183,12 +238,32 @@ const ProductDrawer = ({
                 {images.length > 1 && (
                     <div className="flex flex-wrap gap-2">
                         {images.slice(1).map((img, index) => (
-                            <div key={index} className="w-20 h-20 border rounded overflow-hidden">
-                                <img src={img} alt={`Preview ${index}`} className="w-full h-full object-cover" />
+                            <div key={index} className="relative  w-20 h-20 border rounded overflow-hidden">
+                                <img src={img.url} alt={`Preview ${index}`} className="w-full h-full object-cover" />
+                                <button
+                                    type="button"
+                                    onClick={() => handleRemoveImage(index + 1)}
+                                    className="absolute top-0 right-0 bg-black text-white text-xs px-1"
+                                >
+                                    ✖
+                                </button>
                             </div>
                         ))}
                     </div>
                 )}
+
+                {/* {images.slice(1).map((img, index) => (
+                    <div key={index} className="relative w-20 h-20 border rounded overflow-hidden">
+                        <img src={img.url} alt={`Preview ${index}`} className="w-full h-full object-cover" />
+                        <button
+                            type="button"
+                            onClick={() => handleRemoveImage(index + 1)} // +1 because we sliced first image out
+                            className="absolute top-0 right-0 bg-black text-white text-xs px-1"
+                        >
+                            ✖
+                        </button>
+                    </div>
+                ))} */}
 
                 <div>
                     <label htmlFor="productTitle" className="block text-sm font-medium text-gray-700">

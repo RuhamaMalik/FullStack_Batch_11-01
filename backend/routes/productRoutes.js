@@ -1,5 +1,5 @@
 import express from "express";
-import { createProduct, deleteProduct, getAllProducts, updateProductStatus } from "../controllers/productController.js";
+import { createProduct, deleteProduct, getAllProducts, updateProduct, updateProductStatus } from "../controllers/productController.js";
 import { authorize, middlewareToProtect } from "../middlewares/authMidleware.js";
 import { upload } from "../config/multerConfig.js";
 import { deleteCategory } from "../controllers/categoryController.js";
@@ -7,6 +7,8 @@ import { deleteCategory } from "../controllers/categoryController.js";
 const router = express.Router();
 
 router.post("/", middlewareToProtect, authorize("admin"),  upload.array("images", 5), createProduct); 
+
+router.put("/:id", middlewareToProtect, authorize("admin"), upload.array("images", 5), updateProduct);
 
 router.patch("/:id",middlewareToProtect, authorize("admin"),  updateProductStatus);
 
