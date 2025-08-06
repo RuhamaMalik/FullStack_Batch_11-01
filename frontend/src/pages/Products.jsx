@@ -2,13 +2,15 @@ import React, { useEffect , useState } from 'react';
 import ReactPaginate from 'react-paginate';
 // import image11 from "../assets/11.jpg"
 import { AddToWishlist , RemoveToWishlist} from '../components/WishlistAction';
-import { useUser } from '../context/UserContext';
+// import { useUser } from '../context/UserContext';
 import axios from 'axios';
+import { getUser } from '../utils/auth';
 
 const Products = () => {
   const [field, setField] = useState("")
   const [filterData, setFilterData] = useState([])
-  const { currentUser } = useUser();
+  // const { currentUser } = useUser();
+  const currentUser = getUser()
   const [wishlist, setWishlist] = useState([]);
     const [products, setProducts] = useState([]);
 
@@ -36,7 +38,7 @@ const Products = () => {
       const userWishlist = all[currentUser.email] || [];
       setWishlist(userWishlist.map(item => item.id));
     }
-  }, [currentUser]);
+  }, []);
 
   // Check if item is in wishlist
   const isInWishlist = (id) => wishlist.includes(id);

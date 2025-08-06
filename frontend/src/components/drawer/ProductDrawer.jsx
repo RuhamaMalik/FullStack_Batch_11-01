@@ -110,10 +110,7 @@ const ProductDrawer = ({
 
         try {
             if (isEditing) {
-
-
                 const existingImages = images.filter(img => typeof img.public_id === "string");
-              
 
                 deletedImages.forEach((publicId) => {
                     formData.append("deletedImages", publicId);
@@ -173,6 +170,12 @@ const ProductDrawer = ({
             alert("Failed to save category");
         }
     };
+
+
+// console.log("files >>>>>>>>> ", imageFiles);
+// console.log("images >>>>>>>>> ", images);
+// console.log("deletedImages >>>>>>>>> ", deletedImages);
+
 
     return (
         <div

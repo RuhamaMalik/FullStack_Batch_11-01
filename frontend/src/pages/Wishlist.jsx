@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { useUser } from '../context/UserContext';
+// import { useUser } from '../context/UserContext';
 import { RemoveToWishlist } from '../components/WishlistAction';
+import { getUser } from '../utils/auth';
 
 const Wishlist = () => {
-  const { currentUser } = useUser();
+  // const { currentUser } = useUser();
   const [items, setItems] = useState([]);
+    const currentUser = getUser()
+  
 
   const showsWishlist = () => {
     const allWishlists = JSON.parse(localStorage.getItem('wishlist')) || {};

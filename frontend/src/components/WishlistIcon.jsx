@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useUser } from '../context/UserContext';
+import { getUser } from '../utils/auth';
+// import { useUser } from '../context/UserContext';
 
 const WishlistIcon = () => {
-  const { currentUser } = useUser();
+  // const { currentUser } = useUser();
+    const currentUser = getUser()
+  
   const navigate = useNavigate();
   const [count, setCount] = useState(0);
 

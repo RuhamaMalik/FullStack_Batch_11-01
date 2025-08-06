@@ -1,11 +1,14 @@
 import React from 'react';
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
-import { useUser } from '../context/UserContext';
+// import { useUser } from '../context/UserContext';
 import { v4 as uuidv4 } from 'uuid'; 
+import { getUser } from '../utils/auth';
 
 // ADD TO WISHLIST
 export const AddToWishlist = ({ product }) => {
-  const { currentUser } = useUser();
+  // const { currentUser } = useUser();
+    const currentUser = getUser()
+  
 
   const handleAdd = () => {
     if (!currentUser || !currentUser.email) {
@@ -44,7 +47,9 @@ export const AddToWishlist = ({ product }) => {
 
 // REMOVE FROM WISHLIST
 export const RemoveToWishlist = ({ product, onRemove }) => {
-  const { currentUser } = useUser();
+  // const { currentUser } = useUser();
+    const currentUser = getUser()
+  
 
   const handleRemove = () => {
     if (!currentUser || !currentUser.email) {

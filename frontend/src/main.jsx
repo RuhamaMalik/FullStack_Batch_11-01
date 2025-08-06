@@ -14,9 +14,9 @@ createRoot(document.getElementById('root')).render(
   <StrictMode>
     {/* // provide Auth context */}
     <AuthProvider>
-      <UserProvider>
+      {/* <UserProvider> */}
       <RouterProvider router={router} />
-      </UserProvider>
+      {/* </UserProvider> */}
     </AuthProvider>
   </StrictMode>,
 )
